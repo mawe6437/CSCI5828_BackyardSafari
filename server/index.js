@@ -1,54 +1,42 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
-//var ImageUploader = require('../utils/imageUploader');
+const port = 3002
 
-app.post('/api/v1/image', function (req, res) {
+import express from 'express'
 
-  //FIXME! - Handle image uploading here
-  console.log("Request received for server/upload");
-  res.send({
-    status: 'success'
-  });
+import session from 'express-session'
 
-//  var image = ImageUploader({
-//    data_uri: req.body.data_uri,
- //   filename: req.body.filename,
-  //  filetype: req.body.filetype
-//  }).then(onGoodImageProcess, onBadImageProcess);
+const app = express()
 
+import bodyParser from 'body-parser'
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use( bodyParser.json() );
+
+app.use(session({
+  secret: 'dog vs cat',
+  resave: true,
+  saveUninitialized: false,
+}))
 
 
-  function onGoodImageProcess(resp) {
-    res.send({
-      status: 'success',
-      uri: resp
-    });
-  }
+const api = require('./routes/api');
 
-  function onBadImageProcess(resp) {
-    res.send({
-     status: 'error'
-    });
-  }
-
+// Add headers
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
 });
 
-app.get('/home', (req, res) => {
-  console.log("Request received for server/home");
-  res.send({ express: 'BACKYARD SAFARI - DEPLOYMENT PORTAL'});
-});
 
-app.get('/login', (req, res) => {
-  //FIXME! - Need to pass login credeintials here to DB
-  console.log("Request received for server/login");
-  res.send({ express: 'Login Request Received'});
-});
+// get for test
+app.get('/', api.echo);
 
-app.get('/signup', (req, res) => {
-  //FIXME! - Need to pass signup credeintials here to DB
-  console.log("Request received for server/login");
-  res.send({ express: 'Signup Request Received'});
-});
+app.post('/', api.echo);
+app.post('/create_user', api.create_user);
+app.post('/login_with_email_password', api.login_with_email_password);
+app.post('/login_with_token', api.login_with_token);
+app.post('/logout', api.logout);
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port);
+console.log('Listening on port '+port+'...');

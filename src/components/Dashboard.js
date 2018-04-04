@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { Container, Grid } from 'semantic-ui-react'
 
 import { LOCAL_STRAGE_KEY } from '../utils/Settings'
+import { Link } from 'react-router-dom'
 
 // API
 import * as MyAPI from '../utils/MyAPI'
 
 class Dashboard extends Component {
+
+  //FIXME! - Add imageUpload here
+
+  //FIXME! - Add Game search here
+
+  //FIXME! - Add New Game here
 
   logoutRequest = () => {
 
@@ -33,9 +41,16 @@ class Dashboard extends Component {
 
     const { user } = this.props
 
+    //FIXME! - Do we want to show pictures here?
     return(
       <div className='dashboard' style={{textAlign: 'center'}}>
-
+        <Container className='home' style={{textAlign: 'center'}}>
+          <Grid style={{marginTop:60}}>
+            <Grid.Column textAlign='center' width={16}>
+              <Link to="/upload_image">Upload an image</Link>
+            </Grid.Column>
+          </Grid>
+        </Container>
         <div style={{marginTop:60}}>
           <div>
             <span style={{cursor: 'pointer'}} onClick={() => this.logoutRequest()}>logout fun!</span>

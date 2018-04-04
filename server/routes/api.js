@@ -353,3 +353,8 @@ exports.login_with_token = (req, res) => {
     console.log("err:", err)
   })
 }
+
+// upload picture
+exports.upload_image = (req, res) => {
+    //FIXME! - Add image upload stuff here
+}

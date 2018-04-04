@@ -6,6 +6,7 @@ import Dashboard from './Dashboard'
 import Home from './Home'
 import NoMatch from './NoMatch'
 import CreateAccont from './CreateAccont'
+import ImageUpload from './ImageUpload'
 
 // alert
 import Alert from 'react-s-alert';
@@ -92,6 +93,10 @@ class App extends Component {
 
           <Route exact path='/create_acount' render={() => (
             <CreateAccont />
+          )} />
+
+          <Route exact path='/upload_image' render={() => (
+            <ImageUpload />
           )} />
 
           <Route component={NoMatch} />

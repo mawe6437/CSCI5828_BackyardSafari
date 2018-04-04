@@ -1,2 +1,3 @@
 server/nohup.out
 client/nohup.out
+/node_modules/.cache/

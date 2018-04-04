@@ -37,6 +37,7 @@ app.post('/create_user', api.create_user);
 app.post('/login_with_email_password', api.login_with_email_password);
 app.post('/login_with_token', api.login_with_token);
 app.post('/logout', api.logout);
+app.post('/upload_image', api.upload_image);
 
 app.listen(port);
 console.log('Listening on port '+port+'...');

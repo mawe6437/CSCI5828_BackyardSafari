@@ -3,7 +3,7 @@ var multer = require('multer'),
 bodyParser = require('body-parser'),
 path = require('path');
 var mongoose = require('mongoose');
-var Detail = require('../models/detail');
+var Detail = require('./models/detail');
 /*var upload = multer({ dest: 'uploads/' });*/
 mongoose.connect('mongodb://admin:5828@ds123499.mlab.com:23499/backed_safari_db', { useMongoClient: true });
 
@@ -11,7 +11,7 @@ mongoose.connect('mongodb://admin:5828@ds123499.mlab.com:23499/backed_safari_db'
 var upload = multer({storage: multer.diskStorage({
 
   destination: function (req, file, callback) 
-  { callback(null, '../uploads');},
+  { callback(null, './uploads');},
   filename: function (req, file, callback) 
   { callback(null, file.fieldname +'-' + Date.now()+path.extname(file.originalname));}
 
@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // view engine setup
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static('uploads'));
 
@@ -97,5 +97,5 @@ app.post('/delete',function(req,res){
   res.redirect('/');
 });
 
-var port = 2030;
+var port = 3000;
 app.listen( port, function(){ console.log('listening on port '+port); } );

@@ -356,5 +356,25 @@ exports.login_with_token = (req, res) => {
 
 // upload picture
 exports.upload_image = (req, res) => {
-    //FIXME! - Add image upload stuff here
+  console.log("Server: Calling upload_image!")
+  console.log("req"); //form fields
+  console.log(req.body.filename);
+  console.log(req.body.data_uri);
+
+  let insert_params = {
+      Name: req.body.filename,
+      data_uri: req.body.data_uri,
+  }
+
+  // insert
+  mongoDbHelper.collection("mwImages").insert(insert_params)
+    .then((results) => {
+      console.log('Image added to DB!')
+      res.json({status: 'success', uri:insert_params.data_uri
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
 }

@@ -39,10 +39,14 @@ export const upload = (data) =>
   }).then(res => res.json())
 
 // upload image
-export const upload_image = (data) =>
-  fetch(`${api}/files`, {
+export const upload_image = (params) =>
+  fetch(`${api}/upload_image`, {
     method: 'POST',
-    body: data
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
   }).then(res => res.json())
 
 // signin with token

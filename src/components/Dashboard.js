@@ -40,7 +40,6 @@ class Dashboard extends Component {
   render() {
 
     const { user } = this.props
-
     //FIXME! - Do we want to show pictures here?
     return(
       <div className='dashboard' style={{textAlign: 'center'}}>
@@ -53,7 +52,7 @@ class Dashboard extends Component {
         </Container>
         <div style={{marginTop:60}}>
           <div>
-            <span style={{cursor: 'pointer'}} onClick={() => this.logoutRequest()}>logout fun!</span>
+            <span style={{cursor: 'pointer'}} onClick={() => this.logoutRequest()}>LOGOUT</span>
           </div>
         </div>
 

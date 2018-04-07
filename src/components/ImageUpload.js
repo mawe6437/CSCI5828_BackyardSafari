@@ -1,101 +1,148 @@
-var express = require('express');
-var multer = require('multer'),
-bodyParser = require('body-parser'),
-path = require('path');
-var mongoose = require('mongoose');
-var Detail = require('./models/detail');
-/*var upload = multer({ dest: 'uploads/' });*/
-mongoose.connect('mongodb://admin:5828@ds123499.mlab.com:23499/backed_safari_db', { useMongoClient: true });
+//import { withRouter } from 'react-router'
+//import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {bindAll} from 'lodash';
 
+// semantic-ui
+//import { Container, Form, Input, Button, Grid } from 'semantic-ui-react'
 
-var upload = multer({storage: multer.diskStorage({
+// alert
+import Alert from 'react-s-alert';
 
-  destination: function (req, file, callback) 
-  { callback(null, './uploads');},
-  filename: function (req, file, callback) 
-  { callback(null, file.fieldname +'-' + Date.now()+path.extname(file.originalname));}
+// API
+import * as MyAPI from '../utils/MyAPI'
+//import { LOCAL_STRAGE_KEY } from '../utils/Settings'
 
-}),
+class ImageUpload extends Component {
 
-fileFilter: function(req, file, callback) {
-  var ext = path.extname(file.originalname)
-  if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-    return callback(/*res.end('Only images are allowed')*/ null, false)
-  }
-  callback(null, true)
-}
-});
-
-var app = new express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(express.static('uploads'));
-
-app.get('/', function(req, res){
-  Detail.find({}, function(err,data){
-    if(err){
-      console.log(err);
-    }else{
-      res.render('index',{data:data});
+  constructor() {
+   super();
+    this.state = {
+      data_uri: null,
+      processing: false
     }
-  })
-  
-});
 
-app.post('/', upload.any(), function(req,res){
-  
-  console.log("req.body"); //form fields
-  console.log(req.body);
-  console.log("req.file");
-  console.log(req.files); //form files
-  
-  if(!req.body && !req.files){
-    res.json({success: false});
-  } else {    
-    var c;
-    Detail.findOne({},function(err,data){
-      console.log("into detail");
-
-      if (data) {
-        console.log("if");
-        c = data.unique_id + 1;
-      }else{
-        c=1;
-      }
-
-      var detail = new Detail({
-
-        unique_id:c,
-        Name: req.body.title,
-        image1:req.files[0].filename,
-      });
-
-      detail.save(function(err, Person){
-        if(err)
-          console.log(err);
-        else
-          res.redirect('/');
-
-      });
-
-    }).sort({_id: -1}).limit(1);
-
+    bindAll(this, 'handleFile', 'handleSubmit');
   }
-});
 
-app.post('/delete',function(req,res){
+  handleFile(e) {
+    const reader = new FileReader();
+    const file = e.target.files[0];
 
-   Detail.findByIdAndRemove(req.body.prodId,function(err, data) {
+    reader.onload = (upload) => {
+      this.setState({
+        data_uri: upload.target.result,
+        filename: file.name,
+        filetype: file.type
+      });
+    };
 
-    console.log(data);
+    reader.readAsDataURL(file);
+  }
 
+  handleSubmit(e)
+  {
+    console.log('handleSubmit enter');
+
+    e.preventDefault();
+    const _this = this;
+
+    this.setState({
+      processing: true
+    });
+
+    const params = {
+      data_uri: this.state.data_uri,
+      filename: this.state.filename,
+      filetype: this.state.filetype
+    }
+
+    console.log('Passing params to API:')
+    console.log('data uri')
+    console.log(params.data_uri)
+    console.log('filename')
+    console.log(params.filename)
+    console.log('filetype')
+    console.log(params.filetype)
+    // Upload picture
+    MyAPI.upload_image(params)
+    .then((data) =>
+    {
+      return new Promise((resolve, reject) =>
+      {
+        if (data.status !== 'success')
+        {
+          let error_text = 'Error';
+          if (data.detail)
+          {
+            error_text = data.detail
+          }
+          reject(error_text)
+
+        }
+        else
+        {
+          console.log('API: upload image promise success!')
+          // success
+          _this.setState({
+            processing: false,
+            uploaded_uri: data.uri
+      });
+        }
+      })
+    })
+    .then(() => {
+      console.log('upload: redirect here')
+      // redirect
+      this.props.history.push("/dashboard")
+    })
+    .catch((err) => {
+      console.log("err:", err)
+
+      Alert.error(err, {
+        position: 'top-right',
+        effect: 'slide',
+        timeout: 5000
+      });
    })
-  res.redirect('/');
-});
+  }
 
-var port = 3000;
-app.listen( port, function(){ console.log('listening on port '+port); } );
+          //<img className='image-preview' src={this.state.uploaded_uri} />
+          //<pre className='image-link-box'>{this.state.uploaded_uri}</pre>
+  render() {
+    let processing;
+    let uploaded;
+
+    console.log('Image Upload Rendering!');
+
+    if (this.state.uploaded_uri) {
+      uploaded = (
+        <div>
+          <h4>Image uploaded!</h4>
+          <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
+          <pre className='image-link-box'>{this.state.data_uri}</pre>
+        </div>
+      );
+    }
+
+    if (this.state.processing) {
+      processing = "Processing image, hang tight";
+    }
+
+    return(
+      <div className='row'>
+        <div className='col-sm-12'>
+          <label>Upload the image</label>
+          <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+            <input type="file" onChange={this.handleFile} />
+            <input disabled={this.state.processing} className='btn btn-primary' type="submit" value="Upload" />
+            {processing}
+          </form>
+          {uploaded}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default ImageUpload;

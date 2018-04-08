@@ -11,14 +11,8 @@ import * as MyAPI from '../utils/MyAPI'
 
 class Dashboard extends Component {
 
-  //FIXME! - Add imageUpload here
-
-  //FIXME! - Add Game search here
-
-  //FIXME! - Add New Game here
-
   logoutRequest = () => {
-
+    console.log("logoutRequest received!")
     const { user } = this.props
 
     const param = {
@@ -38,30 +32,41 @@ class Dashboard extends Component {
   }
 
   render() {
+    let title = (
+      <div>
+        <h1>Backyard Safari</h1>
+        <h2>Welcome to Backyard Safari!</h2>
+      </div>
+    );
 
     const { user } = this.props
-    //FIXME! - Do we want to show pictures here?
+
     return(
       <div className='dashboard' style={{textAlign: 'center'}}>
         <Container className='home' style={{textAlign: 'center'}}>
           <Grid style={{marginTop:60}}>
             <Grid.Column textAlign='center' width={16}>
+              {title}
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={16}>
+              <Link to="/new_game">New Game</Link>
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={16}>
+              <Link to="/search_games">Search Games</Link>
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={16}>
               <Link to="/upload_image">Upload an image</Link>
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={16}>
+              <span style={{cursor: 'pointer'}} onClick={() => this.logoutRequest()}>Logout</span>
             </Grid.Column>
           </Grid>
         </Container>
         <div style={{marginTop:60}}>
           <div>
-            <span style={{cursor: 'pointer'}} onClick={() => this.logoutRequest()}>LOGOUT</span>
-          </div>
-        </div>
-
-        <div>
-          <div>
             { JSON.stringify(user)}
           </div>
         </div>
-
       </div>
     )
   }

@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {bindAll} from 'lodash';
 
 // semantic-ui
-//import { Container, Form, Input, Button, Grid } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 // alert
 import Alert from 'react-s-alert';
@@ -107,8 +107,6 @@ class ImageUpload extends Component {
    })
   }
 
-          //<img className='image-preview' src={this.state.uploaded_uri} />
-          //<pre className='image-link-box'>{this.state.uploaded_uri}</pre>
   render() {
     let processing;
     let uploaded;
@@ -120,7 +118,6 @@ class ImageUpload extends Component {
         <div>
           <h4>Image uploaded!</h4>
           <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
-          <pre className='image-link-box'>{this.state.data_uri}</pre>
         </div>
       );
     }
@@ -130,17 +127,27 @@ class ImageUpload extends Component {
     }
 
     return(
-      <div className='row'>
-        <div className='col-sm-12'>
-          <label>Upload the image</label>
-          <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-            <input type="file" onChange={this.handleFile} />
-            <input disabled={this.state.processing} className='btn btn-primary' type="submit" value="Upload" />
-            {processing}
-          </form>
-          {uploaded}
-        </div>
-      </div>
+     <Container text className='image_upload_form'>
+        <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+              <label>Upload an image</label>
+          <Grid>
+            <Grid.Column textAlign='left' width={16}>
+              <div className='row'>
+              <div className='col-sm-12'>
+              <input type="file" onChange={this.handleFile} />
+             </div>
+             </div>
+            </Grid.Column>
+          </Grid>
+          <Grid>
+            <Grid.Column textAlign='left' width={16}>
+              <input disabled={this.state.processing} className='btn btn-primary' type="submit" value="Upload" />
+               {processing}
+              {uploaded}
+            </Grid.Column>
+          </Grid>
+        </form>
+      </Container>
     );
   }
 }

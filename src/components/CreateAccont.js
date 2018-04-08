@@ -11,19 +11,22 @@ import CreateAccontForm from './CreateAccontForm'
 class CreateAccont extends Component {
 
   render() {
+    let title = (
+      <div>
+        <h1>Backyard Safari</h1>
+      </div>
+    );
 
     return(
-
       <Container className='create_acount' style={{textAlign: 'center'}}>
-
-
         <Grid style={{marginTop:60}}>
           <Grid.Column textAlign='right' width={16}>
             <Link to="/">Sign in</Link>
           </Grid.Column>
+          <Grid.Column textAlign='center' width={16}>
+            {title}
+          </Grid.Column>
         </Grid>
-
-
         <CreateAccontForm />
       </Container>
 

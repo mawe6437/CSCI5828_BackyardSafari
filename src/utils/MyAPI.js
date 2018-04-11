@@ -49,6 +49,17 @@ export const upload_image = (params) =>
     body: JSON.stringify( params )
   }).then(res => res.json())
 
+// upload game
+export const upload_game = (params) =>
+  fetch(`${api}/upload_game`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  }).then(res => res.json())
+
 // signin with token
 export const signinWithToken = (params) =>
   fetch(`${api}/login_with_token`, {

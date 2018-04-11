@@ -61,24 +61,27 @@ class ImageUpload extends Component {
       processing: true
     });
 
-    const params = {
+    // Image Params
+    // 1. Image URI
+    // 2. User ID
+    // 3. Upload Timestamp
+    // Debug: filename
+    // Debug: filetype
+
+    // FIXME! - Pull UserID out of LOCAL_STRAGE_KEY
+    const image_params = {
       data_uri: this.state.data_uri,
       filename: this.state.filename,
       filetype: this.state.filetype,
-      description: this.state.description
     }
 
-    console.log('Passing params to API:')
-    console.log('data uri')
-    console.log(params.data_uri)
+    console.log('Passing image_params to API:')
     console.log('filename')
-    console.log(params.filename)
+    console.log(image_params.filename)
     console.log('filetype')
-    console.log(params.filetype)
-    console.log('description')
-    console.log(params.description)
+    console.log(image_params.filetype)
     // Upload picture
-    MyAPI.upload_image(params)
+    MyAPI.upload_image(image_params)
     .then((data) =>
     {
       return new Promise((resolve, reject) =>
@@ -99,17 +102,68 @@ class ImageUpload extends Component {
           // success
           _this.setState({
             processing: false,
-            uploaded_uri: data.uri
+            uploaded_uri: data.uri,
+            uploaded_imageId: data.imageId
           });
-          console.log('upload: redirect here')
-//          this.props.history.push("/dashboard")
+
+          console.log('We dont get here')
+           // Game parameters
+           // 1. Master Image ID
+           // 2. Master User ID
+           // 3. Challenger Image ID (NULL)
+           // 4. Challenger User ID (NULL)
+           // 5. Description
+ 
+           // FIXME! - Pull UserID out of LOCAL_STRAGE_KEY
+           const game_params = {
+             m_imageId: this.state.uploaded_imageId,
+             m_userId: null,
+             c_imageId: null,
+             c_userId: null,
+             description: this.state.description
+           }
+          MyAPI.upload_game(game_params)
+            .then((data) =>
+            {
+              return new Promise((resolve, reject) =>
+              {
+                if (data.status !== 'success')
+                {
+                  let error_text = 'Error';
+                  if (data.detail)
+                  {
+                    error_text = data.detail
+                  }
+                  reject(error_text)
+        
+                }
+                else
+                {
+                  // success
+                  console.log('API: upload game promise success!')
+                  _this.setState({
+                    gameId: data.gameId
+                  });
+
+                }
+              })
+            })
+            .then(() => {
+              console.log('upload: redirect here')
+              // redirect
+        //      this.props.history.push("/dashboard")
+            })
+            .catch((err) => {
+              console.log("err:", err)
+
+              Alert.error(err, {
+                position: 'top-right',
+                effect: 'slide',
+                timeout: 5000
+              });
+           })
         }
       })
-    })
-    .then(() => {
-      console.log('upload: redirect here')
-      // redirect
-//      this.props.history.push("/dashboard")
     })
     .catch((err) => {
       console.log("err:", err)
@@ -146,6 +200,7 @@ class ImageUpload extends Component {
           <h4>Image uploaded!</h4>
           <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
           <h4>{this.state.description}</h4>
+          <h4>{this.state.gameId}</h4>
         </div>
       );
     }

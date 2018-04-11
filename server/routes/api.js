@@ -359,18 +359,21 @@ exports.upload_image = (req, res) => {
   console.log("Server: Calling upload_image!")
   console.log("req"); //form fields
   console.log(req.body.filename);
-  console.log(req.body.data_uri);
+  console.log(req.body.filetype);
+  console.log(req.body.description);
 
+  // FIXME! - Add userId here
   let insert_params = {
-      Name: req.body.filename,
       data_uri: req.body.data_uri,
+      filename: req.body.filename,
+      filetype: req.body.filetype
   }
 
   // insert
   mongoDbHelper.collection("mwImages").insert(insert_params)
     .then((results) => {
       console.log('Image added to DB!')
-      res.json({status: 'success', uri:insert_params.data_uri
+      res.json({status: 'success', uri:insert_params.data_uri, imageId: results._id
       });
   })
   .catch((err) => {
@@ -378,3 +381,35 @@ exports.upload_image = (req, res) => {
     console.log("err:", err)
   })
 }
+
+// upload game
+exports.upload_game = (req, res) => {
+  console.log("Server: Calling upload_game!")
+  console.log("req"); //form fields
+  console.log(req.body.m_imageId);
+  console.log(req.body.m_userId);
+  console.log(req.body.c_imageId);
+  console.log(req.body.c_userId);
+  console.log(req.body.description);
+
+  let insert_params = {
+      m_imageId: req.body.m_imageId,
+      m_userId: req.body.m_userId,
+      c_imageId: req.body.c_imageId,
+      c_userId: req.body.c_userId,
+      description: req.body.description
+  }
+
+  // insert
+  mongoDbHelper.collection("mwGames").insert(insert_params)
+    .then((results) => {
+      console.log('Game added to DB!')
+      res.json({status: 'success', gameId:results._id
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}
+

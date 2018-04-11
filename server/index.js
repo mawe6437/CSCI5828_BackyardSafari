@@ -38,6 +38,7 @@ app.post('/login_with_email_password', api.login_with_email_password);
 app.post('/login_with_token', api.login_with_token);
 app.post('/logout', api.logout);
 app.post('/upload_image', api.upload_image);
+app.post('/upload_game', api.upload_game);
 
 app.listen(port);
 console.log('Listening on port '+port+'...');

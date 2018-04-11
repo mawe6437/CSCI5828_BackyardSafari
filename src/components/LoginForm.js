@@ -50,6 +50,7 @@ class LoginForm extends Component {
           }
 
           localStorage.setItem(LOCAL_STRAGE_KEY, JSON.stringify(params))
+          console.log("LOCAL_STORAGE_KEY:", localStorage.getItem(LOCAL_STRAGE_KEY))
           this.props.mapDispatchToLoginWithPassword(params)
           resolve()
         }

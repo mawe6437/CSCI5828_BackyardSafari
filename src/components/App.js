@@ -7,6 +7,7 @@ import Home from './Home'
 import NoMatch from './NoMatch'
 import CreateAccont from './CreateAccont'
 import ImageUpload from './ImageUpload'
+import CreateGame from './CreateGame'
 
 // alert
 import Alert from 'react-s-alert';
@@ -97,6 +98,10 @@ class App extends Component {
 
           <Route exact path='/upload_image' render={() => (
             <ImageUpload />
+          )} />
+
+          <Route exact path='/create_game' render={() => (
+            <CreateGame />
           )} />
 
           <Route component={NoMatch} />

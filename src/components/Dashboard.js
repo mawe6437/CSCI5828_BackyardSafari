@@ -49,7 +49,7 @@ class Dashboard extends Component {
               {title}
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Link to="/new_game">New Game</Link>
+              <Link to="/create_game">New Game</Link>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
               <Link to="/search_games">Search Games</Link>

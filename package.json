@@ -31,7 +31,7 @@
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.74.2",
     "sha256": "^0.2.0",
-    "uuid": "^3.1.0",    
+    "uuid": "^3.1.0"    
   },
   "description": "This is an example of signin and signuot on reactjs and mongodb",
   "scripts": {

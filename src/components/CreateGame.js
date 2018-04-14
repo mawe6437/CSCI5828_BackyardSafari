@@ -11,7 +11,7 @@ import Alert from 'react-s-alert';
 
 // API
 import * as MyAPI from '../utils/MyAPI'
-//import { LOCAL_STRAGE_KEY } from '../utils/Settings'
+import { LOCAL_STRAGE_KEY } from '../utils/Settings'
 
 class ImageUpload extends Component {
 
@@ -52,7 +52,14 @@ class ImageUpload extends Component {
 
   handleSubmit(e)
   {
-    console.log('handleSubmit enter');
+
+    // Grab the userId out of local storage
+    let json = JSON.parse(localStorage.getItem(LOCAL_STRAGE_KEY));
+    let user = json["user"]._id;
+
+    this.setState({
+        userId: user
+    });
 
     e.preventDefault();
     const _this = this;
@@ -71,11 +78,14 @@ class ImageUpload extends Component {
     // FIXME! - Pull UserID out of LOCAL_STRAGE_KEY
     const image_params = {
       data_uri: this.state.data_uri,
+      user_id: this.state.userId,
       filename: this.state.filename,
       filetype: this.state.filetype,
     }
 
     console.log('Passing image_params to API:')
+    console.log('userId')
+    console.log(image_params.user_id)
     console.log('filename')
     console.log(image_params.filename)
     console.log('filetype')
@@ -106,21 +116,22 @@ class ImageUpload extends Component {
             uploaded_imageId: data.imageId
           });
 
-          console.log('We dont get here')
            // Game parameters
            // 1. Master Image ID
            // 2. Master User ID
            // 3. Challenger Image ID (NULL)
            // 4. Challenger User ID (NULL)
            // 5. Description
+           // 6. Status - Open, Pending, Closed
  
            // FIXME! - Pull UserID out of LOCAL_STRAGE_KEY
            const game_params = {
              m_imageId: this.state.uploaded_imageId,
-             m_userId: null,
+             m_userId: this.state.userId,
              c_imageId: null,
              c_userId: null,
-             description: this.state.description
+             description: this.state.description,
+             g_status: "Open"
            }
           MyAPI.upload_game(game_params)
             .then((data) =>
@@ -142,7 +153,8 @@ class ImageUpload extends Component {
                   // success
                   console.log('API: upload game promise success!')
                   _this.setState({
-                    gameId: data.gameId
+                    gameId: data.gameId,
+                    gameStatus: data.g_status
                   });
 
                 }
@@ -183,9 +195,9 @@ class ImageUpload extends Component {
       <div>
         <h1>Backyard Safari</h1>
         <h2>New Game Creation</h2>
-        <h3>Step 1: Write Description</h3>
-        <h3>Step 2: Upload image</h3>
-        <h3>Step 3: Hit Create Button</h3>
+        <h4>Step 1: Write Description</h4>
+        <h4>Step 2: Upload image</h4>
+        <h4>Step 3: Hit Create Button</h4>
       </div>
     );
 
@@ -198,9 +210,11 @@ class ImageUpload extends Component {
       uploaded = (
         <div>
           <h4>Image uploaded!</h4>
+          <h4>UserID: {this.state.userId}</h4>
+          <h4>Description: {this.state.description}</h4>
+          <h4>GameID: {this.state.gameId}</h4>
+          <h4>Game Status: {this.state.gameStatus}</h4>
           <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
-          <h4>{this.state.description}</h4>
-          <h4>{this.state.gameId}</h4>
         </div>
       );
     }

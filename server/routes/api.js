@@ -397,14 +397,15 @@ exports.upload_game = (req, res) => {
       m_userId: req.body.m_userId,
       c_imageId: req.body.c_imageId,
       c_userId: req.body.c_userId,
-      description: req.body.description
+      description: req.body.description,
+      g_status : req.body.g_status
   }
 
   // insert
   mongoDbHelper.collection("mwGames").insert(insert_params)
     .then((results) => {
       console.log('Game added to DB!')
-      res.json({status: 'success', gameId:results._id
+      res.json({status: 'success', gameId:results._id, g_status:insert_params.g_status
       });
   })
   .catch((err) => {

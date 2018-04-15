@@ -52,6 +52,9 @@ class Dashboard extends Component {
               <Link to="/create_game">New Game</Link>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
+              <Link to="/get_mygames">My Games</Link>
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={16}>
               <Link to="/search_games">Search Games</Link>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>

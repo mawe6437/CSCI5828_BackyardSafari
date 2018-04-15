@@ -414,3 +414,26 @@ exports.upload_game = (req, res) => {
   })
 }
 
+// get user games
+exports.get_mygames = (req, res) => {
+  console.log("Server: Calling get_mygames!")
+  console.log("req"); //form fields
+  console.log(req.body.user_id);
+
+  let find_param = {
+      m_userId: req.body.user_id
+  }
+
+  // insert
+  mongoDbHelper.collection("mwGames").find(find_param)
+    .then((results) => {
+      console.log('Games retrieved from DB!')
+      res.json({status: 'success', results
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}
+

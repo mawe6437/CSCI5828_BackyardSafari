@@ -8,6 +8,7 @@ import NoMatch from './NoMatch'
 import CreateAccont from './CreateAccont'
 import ImageUpload from './ImageUpload'
 import CreateGame from './CreateGame'
+import MyGames from './MyGames'
 
 // alert
 import Alert from 'react-s-alert';
@@ -98,6 +99,10 @@ class App extends Component {
 
           <Route exact path='/upload_image' render={() => (
             <ImageUpload />
+          )} />
+
+          <Route exact path='/get_mygames' render={() => (
+            <MyGames />
           )} />
 
           <Route exact path='/create_game' render={() => (

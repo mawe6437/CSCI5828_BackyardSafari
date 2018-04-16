@@ -29,12 +29,41 @@ class ImageUpload extends Component {
     const reader = new FileReader();
     const file = e.target.files[0];
 
+    //resize image before upload
     reader.onload = (upload) => {
+      var img = document.createElement("img");
+      img.onload = () => {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var MAX_WIDTH = 500;
+        var MAX_HEIGHT = 500;
+        var width = img.width;
+        var height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      var dataurl = canvas.toDataURL("image/png");
       this.setState({
-        data_uri: upload.target.result,
+        data_uri: dataurl,
         filename: file.name,
         filetype: file.type
       });
+    }
+    img.src = upload.target.result;
     };
 
     reader.readAsDataURL(file);

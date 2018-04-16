@@ -60,6 +60,14 @@ export const upload_game = (params) =>
     body: JSON.stringify( params )
   }).then(res => res.json())
 
+// find all games
+export const search_games = () =>
+    fetch(`${api}/search_games`).then(res => res.json())
+
+// search for specific game by description
+export const search_games_description = ( params ) =>
+    fetch(`${api}/search_games`).then(res => res.json())
+
 // signin with token
 export const signinWithToken = (params) =>
   fetch(`${api}/login_with_token`, {

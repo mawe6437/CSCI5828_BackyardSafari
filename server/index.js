@@ -1,10 +1,12 @@
 const port = 3002
 
 import express from 'express'
+import cors from 'cors';
 
 import session from 'express-session'
 
 const app = express()
+app.use(cors());
 
 import bodyParser from 'body-parser'
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,6 +42,8 @@ app.post('/logout', api.logout);
 app.post('/upload_image', api.upload_image);
 app.post('/upload_game', api.upload_game);
 app.post('/get_mygames', api.get_mygames);
+app.get('/search_games', api.search_games);
+app.get('/search_games', api.search_games_description);
 
 app.listen(port);
 console.log('Listening on port '+port+'...');

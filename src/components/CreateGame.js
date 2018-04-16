@@ -30,12 +30,41 @@ class ImageUpload extends Component {
     const reader = new FileReader();
     const file = e.target.files[0];
 
+    //resize image before upload
     reader.onload = (upload) => {
+      var img = document.createElement("img");
+      img.onload = () => {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var MAX_WIDTH = 200;
+        var MAX_HEIGHT = 200;
+        var width = img.width;
+        var height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      var dataurl = canvas.toDataURL("image/png");
       this.setState({
-        data_uri: upload.target.result,
+        data_uri: dataurl,
         filename: file.name,
         filetype: file.type
       });
+    }
+    img.src = upload.target.result;
     };
 
     reader.readAsDataURL(file);
@@ -123,7 +152,7 @@ class ImageUpload extends Component {
            // 4. Challenger User ID (NULL)
            // 5. Description
            // 6. Status - Open, Pending, Closed
- 
+
            // FIXME! - Pull UserID out of LOCAL_STRAGE_KEY
            const game_params = {
              m_imageId: this.state.uploaded_imageId,
@@ -131,7 +160,7 @@ class ImageUpload extends Component {
              c_imageId: null,
              c_userId: null,
              description: this.state.description,
-             g_status: "Open"
+             g_status: "open"
            }
           MyAPI.upload_game(game_params)
             .then((data) =>
@@ -146,7 +175,7 @@ class ImageUpload extends Component {
                     error_text = data.detail
                   }
                   reject(error_text)
-        
+
                 }
                 else
                 {

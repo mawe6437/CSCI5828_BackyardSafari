@@ -414,3 +414,16 @@ exports.upload_game = (req, res) => {
   })
 }
 
+//finds all games
+exports.search_games = (req, res) => {
+  mongoDbHelper.collection("mwGames").find({}).then(data => {
+    res.json(data);
+  })
+}
+
+//finds a specific game by its description
+exports.search_games_description = (req, res) => {
+  mongoDbHelper.collection("mwGames").find(find_param).then(data => {
+    res.json(data);
+  })
+}

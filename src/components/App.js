@@ -8,6 +8,7 @@ import NoMatch from './NoMatch'
 import CreateAccont from './CreateAccont'
 import ImageUpload from './ImageUpload'
 import CreateGame from './CreateGame'
+import SearchGames from './SearchGames'
 
 // alert
 import Alert from 'react-s-alert';
@@ -102,6 +103,10 @@ class App extends Component {
 
           <Route exact path='/create_game' render={() => (
             <CreateGame />
+          )} />
+
+          <Route exact path='/search_games' render={() => (
+            <SearchGames />
           )} />
 
           <Route component={NoMatch} />

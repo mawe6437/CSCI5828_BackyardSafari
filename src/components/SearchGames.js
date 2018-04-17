@@ -7,11 +7,11 @@ import {bindAll} from 'lodash';
 import { Container, Grid, Button, Form, Input } from 'semantic-ui-react'
 
 // alert
-import Alert from 'react-s-alert';
+//import Alert from 'react-s-alert';
 
 // API
 import * as MyAPI from '../utils/MyAPI'
-import { LOCAL_STRAGE_KEY } from '../utils/Settings'
+//import { LOCAL_STRAGE_KEY } from '../utils/Settings'
 
 class ImageUpload extends Component {
 
@@ -43,7 +43,7 @@ class ImageUpload extends Component {
   {
 
     e.preventDefault();
-    const _this = this;
+//    const _this = this;
 
     // this.setState({
     //   processing: true

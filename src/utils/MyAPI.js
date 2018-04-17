@@ -68,6 +68,28 @@ export const search_games = () =>
 export const search_games_description = ( params ) =>
     fetch(`${api}/search_games`).then(res => res.json())
 
+// retrieve user games
+export const get_mygames = (params) =>
+  fetch(`${api}/get_mygames`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  }).then(res => res.json())
+
+// retrieve a game
+export const get_game = (params) =>
+  fetch(`${api}/get_game`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  }).then(res => res.json())
+
 // signin with token
 export const signinWithToken = (params) =>
   fetch(`${api}/login_with_token`, {

@@ -43,7 +43,7 @@
     "test": "react-scripts test --env=jsdom",
     "test_mocha": "mocha",
     "eject": "react-scripts eject",
-    "start_server": "babel-node server",
+    "start_server": "nodemon --exec babel-node server",
     "start_all": "babel-node server"
   },
   "author": "Ko Ohashi",

@@ -1,6 +1,6 @@
 // you can change the port number at server/index.js
-//const api = "http://localhost:3002"
-const api = "http://ec2-18-188-26-9.us-east-2.compute.amazonaws.com:3002"
+const api = "http://localhost:3002"
+//const api = "http://ec2-18-188-26-9.us-east-2.compute.amazonaws.com:3002"
 const API_KEY = '__api_key__'
 
 const headers = {
@@ -65,8 +65,18 @@ export const search_games = () =>
     fetch(`${api}/search_games`).then(res => res.json())
 
 // search for specific game by description
-export const search_games_description = ( params ) =>
-    fetch(`${api}/search_games`).then(res => res.json())
+// export const search_games_description = ( params ) =>
+//     fetch(`${api}/search_games_description`).then(res => res.json())
+
+export const search_games_description = (params) =>
+      fetch(`${api}/search_games_description`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( params )
+      }).then(res => res.json())
 
 // retrieve user games
 export const get_mygames = (params) =>

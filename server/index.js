@@ -43,7 +43,7 @@ app.post('/upload_image', api.upload_image);
 app.post('/upload_game', api.upload_game);
 app.post('/get_mygames', api.get_mygames);
 app.get('/search_games', api.search_games);
-app.get('/search_games', api.search_games_description);
+app.post('/search_games_description', api.search_games_description);
 app.post('/get_game', api.get_game);
 
 app.listen(port);

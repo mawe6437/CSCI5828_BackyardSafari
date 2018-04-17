@@ -52,6 +52,7 @@ class ImageUpload extends Component {
     console.log('Passing search to API:')
     console.log(e)
 
+    console.log(this.state.description)
     const search_params = {
       description: this.state.description
     }
@@ -59,6 +60,7 @@ class ImageUpload extends Component {
     MyAPI.search_games_description(search_params)
     .then((data) => {
     this.setState({ games: data })
+    console.log("this is the data:", data)
   })
 }
 

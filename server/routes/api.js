@@ -447,26 +447,17 @@ exports.search_games = (req, res) => {
 //finds a specific game by its description
 exports.search_games_description = (req, res) => {
 
-//  let description =  req.description;
-// //  let results = null;
-//
-//
+  let search =  req.body.description;
+
   // let find_param = {
   //     '$elemMatch':{
   //       'description':'Bear'
   //     }
   //   }
-  console.log("this is the req.description:", req.body.description);
-  mongoDbHelper.collection("mwGames").find({'description':req.body.description}).then(data => {res.json(data)})
+
+  mongoDbHelper.collection("mwGames").find({'description':search}).then(data => {res.json(data)
+  })
 }
-//   .then((results) => {
-//
-//     if ( results === null ) {
-//     res.json({ status: 'error', detail: 'no such user' });
-//     return;
-//   }
-// })
-// }
 
 
 // get user games

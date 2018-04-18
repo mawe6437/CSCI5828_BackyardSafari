@@ -1,10 +1,6 @@
 // you can change the port number at server/index.js
 const api = "http://localhost:3002"
-<<<<<<< HEAD
-// const api = "http://ec2-18-188-26-9.us-east-2.compute.amazonaws.com:3002"
-=======
 //const api = "http://ec2-18-188-26-9.us-east-2.compute.amazonaws.com:3002"
->>>>>>> 5d7877adf4dafde5b2d80421b85fd5522c723ae0
 const API_KEY = '__api_key__'
 
 const headers = {
@@ -17,7 +13,8 @@ export const createAccount = (params) =>
   fetch(`${api}/create_user`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )
@@ -28,7 +25,8 @@ export const signinWithPassword = (params) =>
   fetch(`${api}/login_with_email_password`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )
@@ -47,7 +45,8 @@ export const upload_image = (params) =>
   fetch(`${api}/upload_image`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )
@@ -58,7 +57,8 @@ export const upload_game = (params) =>
   fetch(`${api}/upload_game`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )
@@ -76,7 +76,8 @@ export const search_games_description = (params) =>
       fetch(`${api}/search_games_description`, {
         method: 'POST',
         headers: {
-          ...headers,
+          'Accept': 'application/json',
+          'Authorization': API_KEY,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify( params )
@@ -87,7 +88,8 @@ export const get_mygames = (params) =>
   fetch(`${api}/get_mygames`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )
@@ -98,7 +100,8 @@ export const get_game = (params) =>
   fetch(`${api}/get_game`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )
@@ -109,7 +112,8 @@ export const signinWithToken = (params) =>
   fetch(`${api}/login_with_token`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )
@@ -120,7 +124,8 @@ export const logout = (params) =>
   fetch(`${api}/logout`, {
     method: 'POST',
     headers: {
-      ...headers,
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( params )

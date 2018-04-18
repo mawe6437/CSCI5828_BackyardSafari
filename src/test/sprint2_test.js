@@ -1,50 +1,50 @@
-// import React from 'react';
+import React from 'react';
 import { expect } from 'chai';
 import { shallow, mount, render } from 'enzyme';
-// import { createAccount } from '../utils/MyAPI';
+
+import * as MyAPI from '../utils/MyAPI'
+const api = "http://localhost:3002"
 
 global.expect = expect;
 
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var server = require('../components/App.js')
-chai.use(chaiHttp);
-
-describe('Check whether it works properly', function(){
+// Testing function is okay?
+// $mocha src/test/setup.js src/test/sprint2_test.js
+describe('Is test working?', function(){
   it('should work well', function(){
     expect(true).to.be.true;
   });
 });
 
-describe('A user enters to the server.', function(){
-  it('should get status OK', function(){
-    chai.request(server)
-    .get('/')
-    expect(res).body.status.should.equal('OK');
+// Test1: Check LoginForm
+// Give correct/wrong ID/PW
+describe('Check LoginForm', function(){
+  it('should pass with correct login ID/PW', function(){
+    const params = {
+      email: 'test2',
+      password: 'test2',
+    }
+    MyAPI.signinWithPassword(params)
+    .then((data) => {
+    expect(data.status).to.equal('success');
+    });
   });
+  it('should have error with wrong login ID/PW', function(){
+    const params = {
+      email: 'test2',
+      password: 'test3',
+    }
+    MyAPI.signinWithPassword(params)
+    .then((data) => {
+    expect(data.status).to.equal('error');
+    });
+  });  
 });
 
 
-// describe('homepage', function(){
-//   it('should respond to GET',function(){
-//     superagent
-//       .get('http://localhost:'+port)
-//       .end(function(res){
-//         expect(res.status).to.equal(200);
-//         done();        
-//     })
-//   })
 
 
-// decribe('GET', function(){
-//   describe('homepage and check for valid response', function(){
-//     it('should return a 200 response', function(done){
-//       api.get('/')
-//       .set('Accept', 'application/json')
-//       .expect(200, done);
-//     });
-//   });
-// });
+
+
 
 
 

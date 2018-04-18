@@ -1,4 +1,4 @@
-//in test/.setup.js
+require('isomorphic-fetch'); /* global fetch */
 require('babel-register')();
 var exposedProperties = ['window', 'navigator', 'document'];
 var jsdom = require('jsdom');

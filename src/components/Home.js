@@ -28,11 +28,7 @@ class Home extends Component {
           </Grid.Column>
         </Grid>
         <LoginForm />
-        <script src="chai.js"></script>
-        <script src="chai-http.js"></script>
-        <script>
-          chai.use(chaiHttp);
-        </script>
+
         </Container>
     )
   }

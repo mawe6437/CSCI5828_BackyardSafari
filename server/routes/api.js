@@ -437,3 +437,48 @@ exports.get_mygames = (req, res) => {
   })
 }
 
+//finds all games
+exports.search_games = (req, res) => {
+  mongoDbHelper.collection("mwGames").find({}).then(data => {
+    res.json(data);
+  })
+}
+
+//finds a specific game by its description
+exports.search_games_description = (req, res) => {
+
+  let search =  req.body.description;
+
+  // let find_param = {
+  //     '$elemMatch':{
+  //       'description':'Bear'
+  //     }
+  //   }
+
+  mongoDbHelper.collection("mwGames").find({'description':search}).then(data => {res.json(data)
+  })
+}
+
+
+// get user games
+exports.get_game = (req, res) => {
+  console.log("Server: Calling get_game!")
+  console.log("req"); //form fields
+  console.log(req.body.gameId);
+
+  let find_param = {
+      _id: req.body.gameId
+  }
+
+  // insert
+  mongoDbHelper.collection("mwGames").findOne(find_param)
+    .then((results) => {
+      console.log('Game retrieved from DB!')
+      res.json({status: 'success', results
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}

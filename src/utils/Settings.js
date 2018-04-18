@@ -1,1 +1,2 @@
 export const LOCAL_STRAGE_KEY = 'PROJECT_INIT'
+export const LOCAL_GAME_KEY = 'PROJECT_GAME_KEY'

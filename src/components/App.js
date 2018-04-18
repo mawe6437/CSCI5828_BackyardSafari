@@ -9,6 +9,8 @@ import CreateAccont from './CreateAccont'
 import ImageUpload from './ImageUpload'
 import CreateGame from './CreateGame'
 import MyGames from './MyGames'
+import SearchGames from './SearchGames'
+import ViewGame from './ViewGame'
 
 // alert
 import Alert from 'react-s-alert';
@@ -92,7 +94,6 @@ class App extends Component {
             <Dashboard />
           )} />
 
-
           <Route exact path='/create_acount' render={() => (
             <CreateAccont />
           )} />
@@ -105,8 +106,16 @@ class App extends Component {
             <MyGames />
           )} />
 
+          <Route exact path='/viewgame' render={() => (
+            <ViewGame />
+          )} />
+
           <Route exact path='/create_game' render={() => (
             <CreateGame />
+          )} />
+
+          <Route exact path='/search_games' render={() => (
+            <SearchGames />
           )} />
 
           <Route component={NoMatch} />

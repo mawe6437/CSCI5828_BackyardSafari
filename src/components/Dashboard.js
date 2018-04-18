@@ -58,9 +58,6 @@ class Dashboard extends Component {
               <Link to="/search_games">Search Games</Link>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Link to="/upload_image">Upload an image</Link>
-            </Grid.Column>
-            <Grid.Column textAlign='left' width={16}>
               <span style={{cursor: 'pointer'}} onClick={() => this.logoutRequest()}>Logout</span>
             </Grid.Column>
           </Grid>

@@ -1,9 +1,8 @@
-import React from 'react';
+// import React from 'react';
+// import { shallow, mount, render } from 'enzyme';
 import { expect } from 'chai';
-import { shallow, mount, render } from 'enzyme';
 
 import * as MyAPI from '../utils/MyAPI'
-const api = "http://localhost:3002"
 
 global.expect = expect;
 
@@ -28,6 +27,7 @@ describe('Check LoginForm', function(){
     expect(data.status).to.equal('success');
     });
   });
+
   it('should have error with wrong login ID/PW', function(){
     const params = {
       email: 'test2',
@@ -40,7 +40,45 @@ describe('Check LoginForm', function(){
   });  
 });
 
+// Test2: Check CreateAccount
+// Give correct/wrong ID/PW
+describe('Check CreateAccount', function(){
+  it('should create an account with correct ID/PW', function(){
+    const params = {
+      // Need to change email/password whenever testing it
+      // So use Date.now() to get new ID whenever testing.
+      email: Date.now(),
+      password: 'test2',
+    }
+    MyAPI.createAccount(params)
+    .then((data) => {
+    expect(data.status).to.equal('success');
+    });
+  });
 
+  it('should have error with blank in the ID field', function(){
+    const params = {
+      email: '',
+      password: 'test2',
+    }
+    MyAPI.createAccount(params)
+    .then((data) => {
+    expect(data.status).to.equal('error');
+    });
+  });  
+
+  it('should have error with existing ID/PW ', function(){
+    const params = {
+      email: 'test2',
+      password: 'test2',
+    }
+    MyAPI.createAccount(params)
+    .then((data) => {
+    expect(data.status).to.equal('error');
+    });
+  });
+
+});
 
 
 

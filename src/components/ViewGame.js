@@ -64,9 +64,9 @@ class ViewGame extends Component {
             gameId: data.results._id,
             gameStatus: data.results.g_status,
             gameDescription: data.results.description,
-            c_imageId: data.results.c_imageId,
+            c_image: data.results.c_image,
             c_userId: data.results.c_userId,
-            m_imageId: data.results.m_userId,
+            m_image: data.results.m_image,
             m_userId: data.results.m_userId
           });
 
@@ -115,9 +115,11 @@ class ViewGame extends Component {
           <h4>Description: {this.state.gameDescription}</h4>
           <h4>Game Status: {this.state.gameStatus}</h4>
           <h4>Master UserID: {this.state.m_userId}</h4>
-          <h4>Master ImageId: {this.state.m_imageId}</h4>
+          <h4>Master ImageId:</h4>
+          <img className='image-preview' src={this.state.m_image} alt="No Image Found" />
           <h4>Challenge UserID: {this.state.c_userId}</h4>
-          <h4>Challenge ImageId: {this.state.c_imageId}</h4>
+          <h4>Challenge ImageId:</h4>
+          <img className='image-preview' src={this.state.c_image} alt="No Image Found" />
         </div>
       );
     }

@@ -72,11 +72,15 @@ class MyGames extends Component {
       for (i = 0; i < results.length; i++) {
         console.log('Image %s', i);
         let id = results[i]._id;
+        let img = results[i].m_image;
+        let desc = results[i].description;
         console.log(id);
 
         tempArray.push(
          <div>
           <h4>GameID: {id}</h4>
+          <h4>Description: {desc}</h4>
+          <img className='image-preview' src={img} alt="Uploaded Title" />
           <button id={id} value={id} onClick={this.onClick}>View</button>
         </div>
         );

@@ -63,7 +63,7 @@ export default class MongoDbHelper {
             resolve(doc);
           });
         });
-      },
+      },    
 
       delete : (id) => { //TODO: delete many
         return new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ export default class MongoDbHelper {
             resolve(result);
           });
         });
-      },
+      }, 
 
       findOne : (param) => {
         return new Promise((resolve, reject) => {

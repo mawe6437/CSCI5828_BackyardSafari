@@ -406,7 +406,7 @@ exports.upload_game = (req, res) => {
   mongoDbHelper.collection("newGameTable").insert(insert_params)
     .then((results) => {
       console.log('Game added to DB!')
-      res.json({status: 'success', 
+      res.json({status: 'success',
                 gameId:results._id,
                 g_status:insert_params.g_status,
                 uri:insert_params.m_image
@@ -443,7 +443,13 @@ exports.get_mygames = (req, res) => {
 
 //finds all games
 exports.search_games = (req, res) => {
-  mongoDbHelper.collection("newGameTable").find({}).then(data => {
+  mongoDbHelper.collection("newGameTable").find({'g_status':'open'})
+  .then((data) => {
+    // set user info
+    if ( data === null ) {
+      res.json({ status: 'error', detail: 'no data in database' });
+      return;
+    }
     res.json(data);
   })
 }

@@ -3,8 +3,7 @@ Built as a simple web application written in React with account longin capabilit
 
 ## Install  
 ```
-git https://github.com/kouohhashi/react_mongo_accounts.git
-cd react_mongo_accounts
+git https://github.com/mawe6437/CSCI5828_BackyardSafari.git
 npm install
 ```
 

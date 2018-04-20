@@ -1,32 +1,8 @@
 // import React from 'react';
 // import { shallow, mount, render } from 'enzyme';
-
-
-
 import { expect } from 'chai';
-
 import * as MyAPI from '../utils/MyAPI'
-
 global.expect = expect;
-
-
-
-/**
- *  Testing files. 
- *  package.json line for react:
- *  "test": "react-scripts test --env=jsdom",
- */
-
-// Sample metatesting. "Are our tests working?"
-var assert = require('assert');
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function(){
-      assert.equal(-1, [1,2,3].indexOf(4));
-    });
-  });
-});
-
 
 // Testing function is okay?
 // $mocha src/test/setup.js src/test/sprint2_test.js
@@ -36,7 +12,7 @@ describe('Is test working?', function(){
   });
 });
 
-// Test1: Check LoginForm
+// Test1: Check LoginForm.js
 // Give correct/wrong ID/PW
 describe('Check LoginForm', function(){
   it('should pass with correct login ID/PW', function(){
@@ -46,7 +22,7 @@ describe('Check LoginForm', function(){
     }
     MyAPI.signinWithPassword(params)
     .then((data) => {
-    expect(data.status).to.equal('success');
+      expect(data.status).to.equal('success');
     });
   });
 
@@ -57,12 +33,12 @@ describe('Check LoginForm', function(){
     }
     MyAPI.signinWithPassword(params)
     .then((data) => {
-    expect(data.status).to.equal('error');
+      expect(data.status).to.equal('error');
     });
   });  
 });
 
-// Test2: Check CreateAccount
+// Test2: Check CreateAccount.js
 // Give correct/wrong ID/PW
 describe('Check CreateAccount', function(){
   it('should create an account with correct ID/PW', function(){
@@ -74,7 +50,7 @@ describe('Check CreateAccount', function(){
     }
     MyAPI.createAccount(params)
     .then((data) => {
-    expect(data.status).to.equal('success');
+      expect(data.status).to.equal('success');
     });
   });
 
@@ -85,7 +61,7 @@ describe('Check CreateAccount', function(){
     }
     MyAPI.createAccount(params)
     .then((data) => {
-    expect(data.status).to.equal('error');
+      expect(data.status).to.equal('error');
     });
   });  
 
@@ -96,106 +72,75 @@ describe('Check CreateAccount', function(){
     }
     MyAPI.createAccount(params)
     .then((data) => {
-    expect(data.status).to.equal('error');
+      expect(data.status).to.equal('error');
     });
   });
-
 });
 
-//A third test. Test image uploading. 
-describe('Check Upload', function(){
-	it('Should throw error if nothing to upload', function(){
-	    const params = {
-	      // Adding picture to upload but if it is null, should give an error
-	    			      data_uri: null ,
-	    			      filename: null ,
-	    			      filetype: null  
-	    			  }
-	    MyAPI.upload_image(params)
-	    .then((data) => {
-	    expect(data.status).to.equal('error');
-	    });
-	  });
-	it('Should throw error if there is something that doesnt exist', function(){
-	    const params = {
-	      // Adding picture to upload but if it is null, should give an error
-	    			      data_uri: fake ,
-	    			      filename: na ,
-	    			      filetype: docx  
-	    			  }
-	    MyAPI.upload_image(params)
-	    .then((data) => {
-	    expect(data.status).to.equal('error');
-	    });
-	  });
-	it('Should not throw an error', function(){
-	    const params = {
-	      // Adding picture to upload but if it is null, should give an error
-	    		   data_uri: '' ,
- 			       filename: 'filename' ,
- 			       filetype: 'bmp'
-	    			  }
-	    MyAPI.upload_image(params)
-	     .then((data) => {
-          expect(data.status).to.equal('success');
-	    });
-	  });
-});  	
+
+// Test3: Check CreateGame.js
+describe('Check CreateGame', function(){
+  //since api.js doesn't define any error cases for this function, 
+  //only 'success' test is needed.
+  it('Should pass with correct information\n\t(game description and a path of an image)', function(){
+    const game_params = {
+       m_image: 'test_for_mocha',
+       m_userId: '309151d0-37d2-11e8-8c49-07c9331c8024',
+       c_image: null,
+       c_userId: null,
+       description: 'test_for_mocha',
+       g_status: "open"
+    }
+    MyAPI.upload_game(game_params)
+    .then((data) => {
+      expect(data.status).to.equal('success');
+    });
+  });
+});   
 
 
+// Test4: Check MyGames.js
+describe('Check MyGames', function(){
+  //since api.js doesn't define any error cases for this function, 
+  //only 'success' test is needed.
+  it('Should pass with any userID. \n\tIt does not matter whether that user has games or not.', function(){
+    const mygame_params = {
+          user_id: 'adddddddddddddddd'
+    }
+    MyAPI.get_mygames(mygame_params)
+    .then((data) => {
+      expect(data.status).to.equal('success');
+    });
+  });
+});   
+
+// Test5: Check SearchGames.js
+describe('Check SearchGames', function(){
+  //since api.js doesn't define any error cases for this function, 
+  //only 'success' test is needed.
+  it('Should pass if it can call search_games function.\n\t If there is no existing game, error state should be provided.', function(){
+    MyAPI.search_games()
+    .then((data) => {
+      if (data==null) {
+        expect(data.status).to.equal('error');    
+      }
+    });
+  });
+});   
 
 
+// Test6: Check ViewGame.js
+describe('Check ViewGame', function(){
+  //since api.js doesn't define any error cases for this function, 
+  //only 'success' test is needed.
+  it('Should pass with any gameID. \n\tIt does not matter whether that gameId exists or not.', function(){
+    const param = {
+      gameId: 'testID_not_exist'
+    }
+    MyAPI.get_game(param)
+    .then((data) => {
+      expect(data.status).to.equal('success');
+    });
+  });
+});   
 
-
-
-// 0. connecting dashboard
-//     before(function(done) {
-//         Camo.connect('mongodb://localhost/app_test').then(function(db) {
-//             database = db;
-//             return database.dropDatabase();
-//         }).then(function() {}).then(done, done);
-//     });
-
-
-
-// 1. send 200 msg when a user request server.(for homepage)
-
-// chai.request(app)  
-//     .put('/api/auth')
-//     .send({username: 'scott@stackabuse.com', passsword: 'abc123'})
-//     .end(function(err, res) {
-//         expect(err).to.be.null;
-//         expect(res).to.have.status(200);
-//     });
-
-
-// expect(res).to.have.status(200);
-
-// 2.  When a user tries to login, check whether information that a user put is correct or not.
-//   //when
-//   var result1 = validate.email('test@naver.com');
-//   var result2 = validate.email('test_1234@naver.com');
-//   var result3 = validate.email('!@test@naver.com');
-//   var result4 = validate.email('test#naver.com');
-//   var result5 = validate.email('test');
-//   var result6 = validate.email('naver.com');
-//   //then
-//   expect(result1).to.be.true;
-//   expect(result2).to.be.true;
-//   expect(result3).to.be.false;
-//   expect(result4).to.be.false;
-//   expect(result5).to.be.false;
-//   expect(result6).to.be.false;
-
-// 3. Check whether a user puts information correctly to the create login page.
-//     Plus, a user has to put both ID and password:
-//     should.have.property('ID');
-
-// var user = {name: 'Scott'};
-// expect(user).to.have.property('name');
-
-// 4. Check whether a user can see dashboard page after login.
-
-// 5.  Check whether a user puts both description and path of image in the imageupload page.
-// expect(user).to.have.property('description');
-// expect(user).to.have.property('path_of_image');

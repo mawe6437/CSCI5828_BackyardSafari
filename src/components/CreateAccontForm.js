@@ -48,7 +48,7 @@ class CreateAccontForm extends Component {
       // redirect
       this.props.history.push("/dashboard")
     })
-    .catch((err) => {
+    .catch((err) => { 
       console.log("err:", err)
 
       Alert.error(err, {

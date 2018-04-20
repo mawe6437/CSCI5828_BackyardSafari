@@ -15,6 +15,7 @@ import { Provider } from 'react-redux'
 
 // css
 import 'semantic-ui-css/semantic.min.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 const logger = store => next => action => {
   console.group(action.type)

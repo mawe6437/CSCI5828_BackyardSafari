@@ -439,7 +439,13 @@ exports.get_mygames = (req, res) => {
 
 //finds all games
 exports.search_games = (req, res) => {
-  mongoDbHelper.collection("mwGames").find({}).then(data => {
+  mongoDbHelper.collection("mwGames").find({'g_status':'open'})
+  .then((data) => {
+    // set user info
+    if ( data === null ) {
+      res.json({ status: 'error', detail: 'no data in database' });
+      return;
+    }
     res.json(data);
   })
 }

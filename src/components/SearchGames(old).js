@@ -47,6 +47,90 @@ class ImageUpload extends Component {
      this.props.history.push("/dashboard")
    }
 
+  // onClick = (e) => {
+  //    const input = e.target.id
+  //    console.log(e.target);
+  //    console.log(input);
+  //    console.log('onClick ID is', input);
+  //    const params = {
+  //      gameId : input,
+  //    }
+  //    localStorage.setItem(LOCAL_GAME_KEY, JSON.stringify(params));
+  //    console.log("LOCAL_GAME_KEY:", localStorage.getItem(LOCAL_GAME_KEY))
+  //    this.props.history.push("/viewgame")
+  // }
+
+  // componentDidMount() {
+  //    // Grab the userId out of local storage
+  //    // let json = JSON.parse(localStorage.getItem(LOCAL_STRAGE_KEY));
+  //    // console.log(json);
+  //    // let userid = json["user"]._id;
+  //    //
+  //    // const _this = this;
+  //    // const mygame_params = {
+  //    //       user_id: userid
+  //    // }
+  //
+  //    MyAPI.search_games()
+  //    .then((results) => {
+  //
+  //      let tempArray = [];
+  //      console.log('Games retrieved. Data:')
+  //      console.log(results);
+  //      //let results = data.results;
+  //      console.log('results:');
+  //      console.log(results);
+  //      var i;
+  //
+  //      tempArray.push(
+  //       <div>
+  //        <h2>Open Games:</h2>
+  //       </div>
+  //      );
+  //
+  //      for (i = 0; i < results.length; i++) {
+  //        console.log('Image %s', i);
+  //        let id = results[i]._id;
+  //        let desc = results[i].desctiption;
+  //        console.log(id);
+  //
+  //        tempArray.push(
+  //         <div>
+  //          <h4>Description: {desc}</h4>
+  //          <button id={id} value={id} onClick={this.onClick}>View</button>
+  //        </div>
+  //        );
+  //      }
+  //      console.log('Results added to state:')
+  //      console.log(tempArray)
+  //      this.setState({ games:tempArray})
+  //    });
+  // }
+
+
+//   handleSubmit(e)
+//   {
+//
+//     e.preventDefault();
+//
+//     console.log('Passing search to API:')
+//     console.log(e)
+//
+//     console.log(this.state.description)
+//     const search_params = {
+//       description: this.state.description
+//     }
+//
+//     MyAPI.search_games_description(search_params)
+//     .then((data) => {
+//
+//     this.setState({ games: data })
+//     console.log("this is the data:", data)
+//   })
+// }
+
+
+
   render() {
     let listOfGames = this.state.games.map(game =>
       <li className="game-list" key={game._id}>{game.description}

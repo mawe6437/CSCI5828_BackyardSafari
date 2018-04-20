@@ -1,8 +1,5 @@
-## Example of basic account system on React and MongoDB
-This is an example web application written in React to demonstrate basic account feature with MongoDB.
-You can create an account and sign in with email or tokens.  
-I borrowed ( ported ) most of code from Meteor's account package which I love.
-I ported Meteor's account package because I could not find good examples to develop simple signup/signin system without using Meteor when I start using React
+## Backyard Safari !
+Built as a simple web application written in React with account longin capabilities with MongoDB. Inspired by pokemonGO, the user can then can create a game by uploading an image and description, with games stored in the MongoDB via a Node server. The App also has Search Games and My Games pages to view all games or games specific to the user. The user can then click on a game to view it and challenge other users with other uploaded images.
 
 ## Install  
 ```
@@ -22,7 +19,7 @@ http://ec2-18-188-26-9.us-east-2.compute.amazonaws.com:3002
 Otherwise, this will point to mine (which is currently up and running April 2018).
 
 ### Start API server  
-API server is going to start on port 3002
+API server is going to start on port 3002. Utilizes Nodemon for quick server updates.
 ```
 npm run start_server
 ```
@@ -37,14 +34,4 @@ You can check at http://localhost:3000  or the web address at port 3000
 
 ## Requirement  
 
-### You need MongoDB. Here's an example of installing MongoDB on mac os X  
-
-```
-brew update   
-brew install mongodb  
-mkdir mongodb_data  
-mongod --dbpath mongodb_data/  
-```
-
-## License  
-MIT. You can do whatever you want.  
+### You need MongoDB. We recommend mLab as above.

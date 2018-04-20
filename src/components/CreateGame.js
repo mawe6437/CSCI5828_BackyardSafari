@@ -81,14 +81,7 @@ class ImageUpload extends Component {
 
   handleSubmit(e)
   {
-
-    // Grab the userId out of local storage
-    let json = JSON.parse(localStorage.getItem(LOCAL_STRAGE_KEY));
-    let user = json["user"]._id;
-
-    this.setState({
-        userId: user
-    });
+    console.log('in handleSubmit')
 
     e.preventDefault();
     const _this = this;
@@ -97,30 +90,35 @@ class ImageUpload extends Component {
       processing: true
     });
 
-    // Image Params
-    // 1. Image URI
-    // 2. User ID
-    // 3. Upload Timestamp
-    // Debug: filename
-    // Debug: filetype
+    // Grab the userId out of local storage
+    let json = JSON.parse(localStorage.getItem(LOCAL_STRAGE_KEY));
+    let user = json["user"]._id;
 
-    // FIXME! - Pull UserID out of LOCAL_STRAGE_KEY
-    const image_params = {
-      data_uri: this.state.data_uri,
-      user_id: this.state.userId,
-      filename: this.state.filename,
-      filetype: this.state.filetype,
+
+    // Game parameters
+    // 1. Master Image
+    // 2. Master User ID
+    // 3. Challenger Image (NULL)
+    // 4. Challenger User ID (NULL)
+    // 5. Description
+    // 6. Status - Open, Pending, Closed
+
+    const game_params = {
+       m_image: this.state.data_uri,
+       m_userId: user,
+       c_image: null,
+       c_userId: null,
+       description: this.state.description,
+       g_status: "open"
     }
 
-    console.log('Passing image_params to API:')
+    console.log('Passing game_params to API:')
     console.log('userId')
-    console.log(image_params.user_id)
-    console.log('filename')
-    console.log(image_params.filename)
-    console.log('filetype')
-    console.log(image_params.filetype)
-    // Upload picture
-    MyAPI.upload_image(image_params)
+    console.log(game_params.user_id)
+    console.log('description')
+    console.log(game_params.description)
+    // Upload game
+    MyAPI.upload_game(game_params)
     .then((data) =>
     {
       return new Promise((resolve, reject) =>
@@ -137,72 +135,15 @@ class ImageUpload extends Component {
         }
         else
         {
-          console.log('API: upload image promise success!')
+          console.log('API: upload game promise success!')
           // success
           _this.setState({
             processing: false,
             uploaded_uri: data.uri,
-            uploaded_imageId: data.imageId
+            gameId: data.gameId,
+            gameStatus: data.g_status,
+            userId: user
           });
-
-           // Game parameters
-           // 1. Master Image ID
-           // 2. Master User ID
-           // 3. Challenger Image ID (NULL)
-           // 4. Challenger User ID (NULL)
-           // 5. Description
-           // 6. Status - Open, Pending, Closed
-
-           // FIXME! - Pull UserID out of LOCAL_STRAGE_KEY
-           const game_params = {
-             m_imageId: this.state.uploaded_imageId,
-             m_userId: this.state.userId,
-             c_imageId: null,
-             c_userId: null,
-             description: this.state.description,
-             g_status: "open"
-           }
-          MyAPI.upload_game(game_params)
-            .then((data) =>
-            {
-              return new Promise((resolve, reject) =>
-              {
-                if (data.status !== 'success')
-                {
-                  let error_text = 'Error';
-                  if (data.detail)
-                  {
-                    error_text = data.detail
-                  }
-                  reject(error_text)
-
-                }
-                else
-                {
-                  // success
-                  console.log('API: upload game promise success!')
-                  _this.setState({
-                    gameId: data.gameId,
-                    gameStatus: data.g_status
-                  });
-
-                }
-              })
-            })
-            .then(() => {
-              console.log('upload: redirect here')
-              // redirect
-        //      this.props.history.push("/dashboard")
-            })
-            .catch((err) => {
-              console.log("err:", err)
-
-              Alert.error(err, {
-                position: 'top-right',
-                effect: 'slide',
-                timeout: 5000
-              });
-           })
         }
       })
     })
@@ -239,11 +180,11 @@ class ImageUpload extends Component {
       uploaded = (
         <div>
           <h4>Image uploaded!</h4>
+          <h4>GameID: {this.state.gameId}</h4>
           <h4>UserID: {this.state.userId}</h4>
           <h4>Description: {this.state.description}</h4>
-          <h4>GameID: {this.state.gameId}</h4>
-          <h4>Game Status: {this.state.gameStatus}</h4>
           <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
+          <h4>Game Status: {this.state.gameStatus}</h4>
         </div>
       );
     }

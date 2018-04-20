@@ -386,26 +386,30 @@ exports.upload_image = (req, res) => {
 exports.upload_game = (req, res) => {
   console.log("Server: Calling upload_game!")
   console.log("req"); //form fields
-  console.log(req.body.m_imageId);
+//  console.log(req.body.m_image);
   console.log(req.body.m_userId);
-  console.log(req.body.c_imageId);
+  console.log(req.body.c_image);
   console.log(req.body.c_userId);
   console.log(req.body.description);
+  console.log(req.body.status);
 
   let insert_params = {
-      m_imageId: req.body.m_imageId,
+      m_image: req.body.m_image,
       m_userId: req.body.m_userId,
-      c_imageId: req.body.c_imageId,
+      c_image: req.body.c_image,
       c_userId: req.body.c_userId,
       description: req.body.description,
       g_status : req.body.g_status
   }
 
   // insert
-  mongoDbHelper.collection("mwGames").insert(insert_params)
+  mongoDbHelper.collection("newGameTable").insert(insert_params)
     .then((results) => {
       console.log('Game added to DB!')
-      res.json({status: 'success', gameId:results._id, g_status:insert_params.g_status
+      res.json({status: 'success',
+                gameId:results._id,
+                g_status:insert_params.g_status,
+                uri:insert_params.m_image
       });
   })
   .catch((err) => {
@@ -425,7 +429,7 @@ exports.get_mygames = (req, res) => {
   }
 
   // insert
-  mongoDbHelper.collection("mwGames").find(find_param)
+  mongoDbHelper.collection("newGameTable").find(find_param)
     .then((results) => {
       console.log('Games retrieved from DB!')
       res.json({status: 'success', results
@@ -439,7 +443,7 @@ exports.get_mygames = (req, res) => {
 
 //finds all games
 exports.search_games = (req, res) => {
-  mongoDbHelper.collection("mwGames").find({'g_status':'open'})
+  mongoDbHelper.collection("newGameTable").find({'g_status':'open'})
   .then((data) => {
     // set user info
     if ( data === null ) {
@@ -452,17 +456,9 @@ exports.search_games = (req, res) => {
 
 //finds a specific game by its description
 exports.search_games_description = (req, res) => {
-
-  let search =  req.body.description;
-
-  // let find_param = {
-  //     '$elemMatch':{
-  //       'description':'Bear'
-  //     }
-  //   }
-
-  mongoDbHelper.collection("mwGames").find({'description':search}).then(data => {res.json(data)
-  })
+  mongoDbHelper.collection("newGameTable").find(find_param).then(data => {
+    res.json(data);
+   })
 }
 
 
@@ -477,7 +473,7 @@ exports.get_game = (req, res) => {
   }
 
   // insert
-  mongoDbHelper.collection("mwGames").findOne(find_param)
+  mongoDbHelper.collection("newGameTable").findOne(find_param)
     .then((results) => {
       console.log('Game retrieved from DB!')
       res.json({status: 'success', results

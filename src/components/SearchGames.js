@@ -27,7 +27,7 @@ class ImageUpload extends Component {
       description: null,
       games: []
     }
-      bindAll(this, 'handleSubmit');
+      //bindAll(this, 'handleSubmit');
   }
 
   handleChange = (e, { name, value }) => {
@@ -108,36 +108,30 @@ class ImageUpload extends Component {
   // }
 
 
-  handleSubmit(e)
-  {
-
-    e.preventDefault();
-//    const _this = this;
-
-    // this.setState({
-    //   processing: true
-    // });
-
-    console.log('Passing search to API:')
-    console.log(e)
-
-    console.log(this.state.description)
-    const search_params = {
-      description: this.state.description
-    }
-
-    MyAPI.search_games_description(search_params)
-    .then((data) => {
-
-    this.setState({ games: data })
-    console.log("this is the data:", data)
-  })
-}
+//   handleSubmit(e)
+//   {
+//
+//     e.preventDefault();
+//
+//     console.log('Passing search to API:')
+//     console.log(e)
+//
+//     console.log(this.state.description)
+//     const search_params = {
+//       description: this.state.description
+//     }
+//
+//     MyAPI.search_games_description(search_params)
+//     .then((data) => {
+//
+//     this.setState({ games: data })
+//     console.log("this is the data:", data)
+//   })
+// }
 
 
 
   render() {
-      //<button id={game.id} value={game.id} onClick={this.onClick}>View</button>
     let listOfGames = this.state.games.map(game =>
       <li className="game-list" key={game._id}>{game.description}
       </li>
@@ -177,6 +171,7 @@ class ImageUpload extends Component {
       text: 'Status',
       filter: textFilter(),
       headerAlign: 'center',
+      order: 'desc'
 
     }];
 
@@ -201,7 +196,6 @@ class ImageUpload extends Component {
     return(
      <Container text className='search_games_form'>
 
-        <form onSubmit={this.handleSubmit} encType="multipart/form-data">
           <Grid>
             <Grid.Column textAlign='center' width={16}>
               {title}
@@ -214,7 +208,6 @@ class ImageUpload extends Component {
 
           </Grid>
 
-        </form>
         <h3 style={{ borderRadius: '0.25em', textAlign: 'center', color: 'black', border: '2px solid black', padding: '0.1em' }}>Click to Challenge!</h3>
         <BootstrapTable keyField='id' data={ gamedata } columns={ columns } rowEvents={ rowEvents } filter={ filterFactory() }
         striped
@@ -232,6 +225,7 @@ class ImageUpload extends Component {
         </Form>
         <Grid.Column textAlign='center' width={16}>
         </Grid.Column>
+
       </Container>
 
     );

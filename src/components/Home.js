@@ -28,6 +28,7 @@ class Home extends Component {
           </Grid.Column>
         </Grid>
         <LoginForm />
+
         </Container>
     )
   }

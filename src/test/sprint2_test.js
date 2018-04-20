@@ -1,10 +1,32 @@
 // import React from 'react';
 // import { shallow, mount, render } from 'enzyme';
+
+
+
 import { expect } from 'chai';
 
 import * as MyAPI from '../utils/MyAPI'
 
 global.expect = expect;
+
+
+
+/**
+ *  Testing files. 
+ *  package.json line for react:
+ *  "test": "react-scripts test --env=jsdom",
+ */
+
+// Sample metatesting. "Are our tests working?"
+var assert = require('assert');
+describe('Array', function() {
+  describe('#indexOf()', function() {
+    it('should return -1 when the value is not present', function(){
+      assert.equal(-1, [1,2,3].indexOf(4));
+    });
+  });
+});
+
 
 // Testing function is okay?
 // $mocha src/test/setup.js src/test/sprint2_test.js
@@ -80,8 +102,45 @@ describe('Check CreateAccount', function(){
 
 });
 
-
-
+//A third test. Test image uploading. 
+describe('Check Upload', function(){
+	it('Should throw error if nothing to upload', function(){
+	    const params = {
+	      // Adding picture to upload but if it is null, should give an error
+	    			      data_uri: null ,
+	    			      filename: null ,
+	    			      filetype: null  
+	    			  }
+	    MyAPI.upload_image(params)
+	    .then((data) => {
+	    expect(data.status).to.equal('error');
+	    });
+	  });
+	it('Should throw error if there is something that doesnt exist', function(){
+	    const params = {
+	      // Adding picture to upload but if it is null, should give an error
+	    			      data_uri: fake ,
+	    			      filename: na ,
+	    			      filetype: docx  
+	    			  }
+	    MyAPI.upload_image(params)
+	    .then((data) => {
+	    expect(data.status).to.equal('error');
+	    });
+	  });
+	it('Should not throw an error', function(){
+	    const params = {
+	      // Adding picture to upload but if it is null, should give an error
+	    		   data_uri: '' ,
+ 			       filename: 'filename' ,
+ 			       filetype: 'bmp'
+	    			  }
+	    MyAPI.upload_image(params)
+	     .then((data) => {
+          expect(data.status).to.equal('success');
+	    });
+	  });
+});  	
 
 
 

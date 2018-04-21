@@ -255,10 +255,10 @@ handleSubmit(e)
           <h4>Description: {this.state.gameDescription}</h4>
           <h4>Game Status: {this.state.gameStatus}</h4>
           <h4>Master UserID: {this.state.m_userId}</h4>
-          <h4>Master ImageId:</h4>
+          <h4>Master Image:</h4>
           <img className='image-preview' src={this.state.m_image} alt="No Image Found" />
           <h4>Challenge UserID: {this.state.c_userId}</h4>
-          <h4>Challenge ImageId:</h4>
+          <h4>Challenge Image:</h4>
           <img className='image-preview' src={this.state.c_image} alt="No Image Found" />
         </div>
       );
@@ -292,28 +292,29 @@ handleSubmit(e)
      // Assume you can challenge here
      else{
        console.log('You are challenger of this game')
-       //Upload image here
-       challenge = (
-         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+       if (this.state.c_image === null){
+         //Upload image here
+         challenge = (
+           <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+              <Grid>
+                <Grid.Column textAlign='left' width={16}>
+                  <label>Upload an image</label>
+                  <div className='row'>
+                  <div className='col-sm-12'>
+                  <input type="file" onChange={this.handleFile} />
+                  </div>
+                  </div>
+                </Grid.Column>
+              </Grid>
             <Grid>
               <Grid.Column textAlign='left' width={16}>
-                <label>Upload an image</label>
-                <div className='row'>
-                <div className='col-sm-12'>
-                <input type="file" onChange={this.handleFile} />
-                </div>
-                </div>
+                <input className='btn btn-primary' type="submit" value="Upload" />
               </Grid.Column>
             </Grid>
-          <Grid>
-            <Grid.Column textAlign='left' width={16}>
-              <input className='btn btn-primary' type="submit" value="Upload" />
-            </Grid.Column>
-          </Grid>
-        </form>
-      );
-
-     }
+          </form>
+        );
+       }
+    }
    }
    else{
    // Game is not open; either deleted or finished

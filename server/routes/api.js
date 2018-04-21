@@ -418,17 +418,53 @@ exports.upload_game = (req, res) => {
   })
 }
 
+// update game
+exports.update_game = (req, res) => {
+  console.log("Server: Calling update_game!")
+  console.log("req"); //form fields
+  console.log(req.body.game_id);
+  console.log(req.body.c_image);
+  console.log(req.body.c_userId);
+
+   let find_param = {
+      _id: req.body.game_id
+    }
+
+    let upd_param = {
+      $set: {
+      c_image: req.body.c_image,
+      c_userId: req.body.c_userId
+      }
+    }
+
+    // update
+    mongoDbHelper.collection("newGameTable").update(find_param, upd_param)
+    .then((results) => {
+      console.log('Game updated in DB!')
+      res.json({status: 'success', results
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}
+
 // get user games
 exports.get_mygames = (req, res) => {
   console.log("Server: Calling get_mygames!")
   console.log("req"); //form fields
   console.log(req.body.user_id);
 
+  // Get both master and challenger games
   let find_param = {
-      m_userId: req.body.user_id
+    $or: [
+      { m_userId: req.body.user_id}, 
+      { c_userId: req.body.user_id}
+    ] 
   }
 
-  // insert
+  // find
   mongoDbHelper.collection("newGameTable").find(find_param)
     .then((results) => {
       console.log('Games retrieved from DB!')

@@ -65,7 +65,7 @@ class MyGames extends Component {
 
       tempArray.push(
        <div>
-        <h2>Games List:</h2>
+        <h2>Master Games List:</h2>
        </div>
       );
 
@@ -73,9 +73,12 @@ class MyGames extends Component {
         console.log('Image %s', i);
         let id = results[i]._id;
         let img = results[i].m_image;
+        let m_user = results[i].m_userId;
         let desc = results[i].description;
         console.log(id);
 
+        if(m_user === userid)
+        { 
         tempArray.push(
          <div>
           <h4>GameID: {id}</h4>
@@ -84,6 +87,33 @@ class MyGames extends Component {
           <button id={id} value={id} onClick={this.onClick}>View</button>
         </div>
         );
+        }
+      }
+      tempArray.push(
+       <div>
+        <h2>Challenger Games List:</h2>
+       </div>
+      );
+
+      for (i = 0; i < results.length; i++) {
+        console.log('Image %s', i);
+        let id = results[i]._id;
+        let img = results[i].m_image;
+        let c_user = results[i].c_userId;
+        let desc = results[i].description;
+        console.log(id);
+
+        if(c_user === userid)
+        { 
+        tempArray.push(
+         <div>
+          <h4>GameID: {id}</h4>
+          <h4>Description: {desc}</h4>
+          <img className='image-preview' src={img} alt="Uploaded Title" />
+          <button id={id} value={id} onClick={this.onClick}>View</button>
+        </div>
+        );
+        }
       }
       console.log('Results added to state:')
       console.log(tempArray)

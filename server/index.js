@@ -41,6 +41,7 @@ app.post('/login_with_token', api.login_with_token);
 app.post('/logout', api.logout);
 app.post('/upload_image', api.upload_image);
 app.post('/upload_game', api.upload_game);
+app.post('/update_game', api.update_game);
 app.post('/get_mygames', api.get_mygames);
 app.get('/search_games', api.search_games);
 app.post('/search_games_description', api.search_games_description);

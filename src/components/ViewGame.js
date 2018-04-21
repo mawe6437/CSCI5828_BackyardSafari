@@ -7,7 +7,7 @@ import {bindAll} from 'lodash';
 import { Container, Grid, Button, Form } from 'semantic-ui-react'
 
 // alert
-//import Alert from 'react-s-alert';
+import Alert from 'react-s-alert';
 
 // API
 import * as MyAPI from '../utils/MyAPI'
@@ -20,13 +20,19 @@ class ViewGame extends Component {
    super();
     this.state = {
       data_uri: null,
-      processing: false
     }
 
-    bindAll(this, 'handleSubmit');
+    bindAll(this, 'handleFile', 'handleSubmit');
   }
 
   componentDidMount() {
+
+    // Grab the userId out of local storage
+    let json = JSON.parse(localStorage.getItem(LOCAL_STRAGE_KEY));
+    console.log(json);
+    let userid = json["user"]._id;
+    this.setState({ cur_user: userid});
+
     const game_data = localStorage.getItem(LOCAL_GAME_KEY)
     if (!game_data) {
       console.log('ViewGame: No Game Data!!');
@@ -70,7 +76,6 @@ class ViewGame extends Component {
             m_userId: data.results.m_userId
           });
 
-          //FIXME! - Retrieve images here
           resolve()
         }
       })
@@ -90,11 +95,144 @@ class ViewGame extends Component {
     this.props.history.push("/dashboard")
   }
 
+  // Master has accepted Challenger image
+  onAccept = (e) => {
+    console.log('Challenge image accepted!')
+    //FIXME! - Change game status in DB
+    //         Add log entry here
+    //         Update points system here
 
-  handleSubmit(e)
+    this.setState({gameStatus: 'finished'});
+ }
+
+  // Master has rejected Challenger image
+  onReject = (e) => {
+    console.log('Challenge image rejected!')
+    //FIXME! - Remove challenger image/userId from DB
+    //         Add log entry here
+
+    this.setState({c_image: null, c_userId: null});
+ }
+
+  // Master has deleted this game
+  onDelete = (e) => {
+    console.log('Game deleted!')
+    //FIXME! - Remove game from DB
+    //         Remove game from local storage
+    //         Add log entry here
+    this.props.history.push("/dashboard")
+ }
+
+
+handleDeadSubmit(e)
   {
-
   }
+
+handleSubmit(e)
+  {
+    console.log('in handleSubmit')
+
+    e.preventDefault();
+    const _this = this;
+
+    // Game parameters
+    // 1. Game ID
+    // 2. Challenger Image
+    // 3. Challenger User ID
+
+    const update_params = {
+       game_id: this.state.gameId,
+       c_image: this.state.data_uri,
+       c_userId: this.state.cur_user
+    }
+
+    console.log('Passing game_params to API:')
+    console.log('userId')
+    console.log(update_params.c_userId)
+    console.log('gameId')
+    console.log(update_params.game_id)
+    // Update game
+    MyAPI.update_game(update_params)
+    .then((data) =>
+    {
+      return new Promise((resolve, reject) =>
+      {
+        if (data.status !== 'success')
+        {
+          let error_text = 'Error';
+          if (data.detail)
+          {
+            error_text = data.detail
+          }
+          reject(error_text)
+
+        }
+        else
+        {
+          console.log('API: upload game promise success!')
+          // success
+          _this.setState({
+            c_image: this.state.data_uri,
+            c_userId: this.state.cur_user
+          });
+        }
+      })
+    })
+    .catch((err) => {
+      console.log("err:", err)
+
+      Alert.error(err, {
+        position: 'top-right',
+        effect: 'slide',
+        timeout: 5000
+      });
+   })
+  }
+
+  handleFile(e) {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+
+    //resize image before upload
+    reader.onload = (upload) => {
+      var img = document.createElement("img");
+      img.onload = () => {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var MAX_WIDTH = 200;
+        var MAX_HEIGHT = 200;
+        var width = img.width;
+        var height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      var dataurl = canvas.toDataURL("image/png");
+      this.setState({
+        data_uri: dataurl,
+        filename: file.name,
+        filetype: file.type
+      });
+    }
+    img.src = upload.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
 
   render() {
 
@@ -106,6 +244,8 @@ class ViewGame extends Component {
     );
 
     let loaded;
+    let master;
+    let challenge;
 
     if (this.state.gameId){
          loaded = (
@@ -124,15 +264,72 @@ class ViewGame extends Component {
       );
     }
 
+   // Logged in as Master
+   if (this.state.gameStatus === 'open'){
+     console.log('Game is open!')
+     if (this.state.cur_user === this.state.m_userId){
+       console.log('You are master of this game')
+       // 1. If no challenge image, add Delete button
+       if (this.state.c_image != null){
+         master = (
+           <div>
+             <button id="Accept" value="Accept" onClick={this.onAccept}>Accept</button>
+             <button id="Reject" value="Reject" onClick={this.onReject}>Reject</button>
+           </div>
+         );
+       }
+       // 2. If challenge image and open status, Accept/Reject buttons
+       else{
+         master = (
+           <div>
+             <button id="Delete" value="Delete" onClick={this.onDelete}>Delete</button>
+           </div>
+         );
+
+       }
+
+     }
+     // Assume you can challenge here
+     else{
+       console.log('You are challenger of this game')
+       //Upload image here
+       challenge = (
+         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+            <Grid>
+              <Grid.Column textAlign='left' width={16}>
+                <label>Upload an image</label>
+                <div className='row'>
+                <div className='col-sm-12'>
+                <input type="file" onChange={this.handleFile} />
+                </div>
+                </div>
+              </Grid.Column>
+            </Grid>
+          <Grid>
+            <Grid.Column textAlign='left' width={16}>
+              <input className='btn btn-primary' type="submit" value="Upload" />
+            </Grid.Column>
+          </Grid>
+        </form>
+      );
+
+     }
+   }
+   else{
+   // Game is not open; either deleted or finished
+   }
+
     return(
      <Container text className='view_game_form'>
-        <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+        <form onSubmit={this.handleDeadSubmit} encType="multipart/form-data">
           <Grid>
             <Grid.Column textAlign='center' width={16}>
               {title}
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
               {loaded}
+              {master}
+              {challenge}
             </Grid.Column>
           </Grid>
         </form>

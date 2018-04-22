@@ -10,8 +10,7 @@ app.use(cors());
 
 import bodyParser from 'body-parser'
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use( bodyParser.json() );
-
+app.use(bodyParser.json({limit: '500kb'}));
 app.use(session({
   secret: 'dog vs cat',
   resave: true,

@@ -19,7 +19,7 @@ class ImageUpload extends Component {
    super();
     this.state = {
       data_uri: null,
-      description: null,
+      description: "",
       processing: false
     }
 
@@ -32,14 +32,15 @@ class ImageUpload extends Component {
 
     //resize image before upload
     reader.onload = (upload) => {
+      console.log('handleFile: onload')
       var img = document.createElement("img");
       img.onload = () => {
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
 
-        var MAX_WIDTH = 200;
-        var MAX_HEIGHT = 200;
+        var MAX_WIDTH = 400;
+        var MAX_HEIGHT = 400;
         var width = img.width;
         var height = img.height;
 

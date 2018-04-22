@@ -122,7 +122,13 @@ class ViewGame extends Component {
     //         Add log entry here
     this.props.history.push("/dashboard")
  }
-
+  // Challenger has removed his image
+  onRemove = (e) => {
+    console.log('Challenger Removed!')
+    //FIXME! - Remove c_image/c_userId from DB
+    //         Add log entry here
+    this.props.history.push("/get_mygames")
+ }
 
 handleDeadSubmit(e)
   {
@@ -201,8 +207,8 @@ handleSubmit(e)
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
 
-        var MAX_WIDTH = 200;
-        var MAX_HEIGHT = 200;
+        var MAX_WIDTH = 400;
+        var MAX_HEIGHT = 400;
         var width = img.width;
         var height = img.height;
 
@@ -267,9 +273,11 @@ handleSubmit(e)
    // Logged in as Master
    if (this.state.gameStatus === 'open'){
      console.log('Game is open!')
+
+     // Master View
      if (this.state.cur_user === this.state.m_userId){
        console.log('You are master of this game')
-       // 1. If no challenge image, add Delete button
+       // If challenge image and open status, Accept/Reject buttons
        if (this.state.c_image != null){
          master = (
            <div>
@@ -278,7 +286,7 @@ handleSubmit(e)
            </div>
          );
        }
-       // 2. If challenge image and open status, Accept/Reject buttons
+       // If no challenge image, add Delete button
        else{
          master = (
            <div>
@@ -289,9 +297,10 @@ handleSubmit(e)
        }
 
      }
-     // Assume you can challenge here
+     // Challenger View
      else{
        console.log('You are challenger of this game')
+       // Add Challenge Image
        if (this.state.c_image === null){
          //Upload image here
          challenge = (
@@ -314,6 +323,13 @@ handleSubmit(e)
           </form>
         );
        }
+       else{
+         challenge = (
+           <div>
+             <button id="Remove" value="Remove" onClick={this.onRemove}>Remove</button>
+           </div>
+         );
+      }
     }
    }
    else{

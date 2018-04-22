@@ -116,12 +116,37 @@ class ViewGame extends Component {
 
   // Master has deleted this game
   onDelete = (e) => {
-    console.log('Game deleted!')
-    //FIXME! - Remove game from DB
-    //         Remove game from local storage
-    //         Add log entry here
-    this.props.history.push("/dashboard")
+
+   e.preventDefault();
+   const param = {
+      gameId: this.state.gameId
+    }
+
+    console.log('Deleting gameId:')
+    console.log(this.state.gameId)
+    MyAPI.delete_game(param)
+    .then((data) => {
+
+     return new Promise((resolve, reject) => {
+       if (data.status !== 'success'){
+          reject('error')
+       }
+       else {
+          // FIXME! - Add log entry here
+          console.log('Game deleted!')
+          localStorage.removeItem(LOCAL_GAME_KEY);
+          this.props.history.push("/get_mygames")
+
+          resolve()
+        }
+        });
+    })
+    .catch((err) => {
+      console.log("err:", err)
+      localStorage.removeItem(LOCAL_GAME_KEY);
+    })
  }
+
   // Challenger has removed his image
   onRemove = (e) => {
     console.log('Challenger Removed!')

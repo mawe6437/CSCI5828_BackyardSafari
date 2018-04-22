@@ -119,6 +119,18 @@ export const get_game = (params) =>
     body: JSON.stringify( params )
   }).then(res => res.json())
 
+// delete a game
+export const delete_game = (params) =>
+  fetch(`${api}/delete_game`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  }).then(res => res.json())
+
 // signin with token
 export const signinWithToken = (params) =>
   fetch(`${api}/login_with_token`, {

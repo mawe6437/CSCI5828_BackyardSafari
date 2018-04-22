@@ -10,7 +10,6 @@ const db_name = 'backed_safari_db'
 import MongoDbHelper from './MongoDbHelper';
 let url = 'mongodb://admin:5828@ds123499.mlab.com:23499/backed_safari_db';
 let mongoDbHelper = new MongoDbHelper(url);
-
 const API_KEY = '__api_key__'
 
 // start connection
@@ -498,7 +497,7 @@ exports.search_games_description = (req, res) => {
 }
 
 
-// get user games
+// get a game
 exports.get_game = (req, res) => {
   console.log("Server: Calling get_game!")
   console.log("req"); //form fields
@@ -512,6 +511,29 @@ exports.get_game = (req, res) => {
   mongoDbHelper.collection("newGameTable").findOne(find_param)
     .then((results) => {
       console.log('Game retrieved from DB!')
+      res.json({status: 'success', results
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}
+
+// delete a game
+exports.delete_game = (req, res) => {
+  console.log("Server: Calling delete_game!")
+  console.log("req"); //form fields
+  console.log(req.body.gameId);
+
+  let del_param = {
+      _id: req.body.gameId
+  }
+
+  // insert
+  mongoDbHelper.collection("newGameTable").delete(del_param)
+    .then((results) => {
+      console.log('Game deleted from DB!')
       res.json({status: 'success', results
       });
   })

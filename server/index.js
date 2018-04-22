@@ -45,6 +45,7 @@ app.post('/get_mygames', api.get_mygames);
 app.get('/search_games', api.search_games);
 app.post('/search_games_description', api.search_games_description);
 app.post('/get_game', api.get_game);
+app.post('/delete_game', api.delete_game);
 
 app.listen(port);
 console.log('Listening on port '+port+'...');

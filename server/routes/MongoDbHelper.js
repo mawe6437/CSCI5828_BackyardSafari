@@ -3,7 +3,6 @@
  */
 import mongodb  from 'mongodb';
 import uuid from 'uuid';
-
 /*
  http://mongodb.github.io/node-mongodb-native/2.0/tutorials/crud_operations/
  */
@@ -65,9 +64,9 @@ export default class MongoDbHelper {
         });
       },    
 
-      delete : (id) => { //TODO: delete many
+      delete : (param) => { //TODO: delete many
         return new Promise((resolve, reject) => {
-          mongoDbCollection.removeOne({_id: id}, (err, result) => {
+          mongoDbCollection.remove(param, (err, result) => {
             if (err) { reject(err); }
             resolve(result);
           });

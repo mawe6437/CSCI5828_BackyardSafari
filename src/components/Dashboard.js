@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { Container, Grid } from 'semantic-ui-react'
+import { Container, Grid, Form, Button } from 'semantic-ui-react'
 
 import { LOCAL_STRAGE_KEY } from '../utils/Settings'
 import { Link } from 'react-router-dom'
-
+import {bindAll} from 'lodash';
 // API
 import * as MyAPI from '../utils/MyAPI'
 
 class Dashboard extends Component {
+  constructor() {
+   super();
+
+    bindAll(this, 'goNewGame', 'logoutRequest');
+  }
 
   logoutRequest = () => {
     console.log("logoutRequest received!")
@@ -31,6 +36,17 @@ class Dashboard extends Component {
     })
   }
 
+  goNewGame = (e) => {
+    this.props.history.push("/create_game")
+  }
+
+  goMyGame = (e) => {
+    this.props.history.push("/get_mygames")
+  }
+
+  goSearchGame = (e) => {
+    this.props.history.push("/search_games")
+  }
   render() {
     let title = (
       <div>
@@ -49,24 +65,35 @@ class Dashboard extends Component {
               {title}
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Link to="/create_game">New Game</Link>
+              <Form onSubmit={this.goNewGame} style={{marginTop:60}}>
+                <Button
+                  style={{width: '100%'}}
+                  type='submit'>New Game</Button>
+              </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Link to="/get_mygames">My Games</Link>
+              <Form onSubmit={this.goMyGame} style={{marginTop:60}}>
+                <Button
+                  style={{width: '100%'}}
+                  type='submit'>My Games</Button>
+              </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Link to="/search_games">Search Games</Link>
+              <Form onSubmit={this.goSearchGame} style={{marginTop:60}}>
+                <Button
+                  style={{width: '100%'}}
+                  type='submit'>Search Games</Button>
+              </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <span style={{cursor: 'pointer'}} onClick={() => this.logoutRequest()}>Logout</span>
+              <Form onSubmit={this.logoutRequest} style={{marginTop:60}}>
+                <Button
+                  style={{width: '100%'}}
+                  type='submit'>Logout</Button>
+              </Form>
             </Grid.Column>
           </Grid>
         </Container>
-        <div style={{marginTop:60}}>
-          <div>
-            { JSON.stringify(user)}
-          </div>
-        </div>
       </div>
     )
   }

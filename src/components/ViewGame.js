@@ -118,13 +118,16 @@ class ViewGame extends Component {
        }
        else {
           // FIXME! - Add log entry here
-          // FIXME! - Add alert here before jumping
           // FIXME! - Update points system here
+          Alert.success('CHALLENGE ACCEPTED', {
+          position: 'top-right',
+          onClose: function () { 
+            console.log('onClose Fired!');
+          } 
+          });
           console.log('Game Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
           this.props.history.push("/get_mygames")
-
-          resolve()
         }
         });
     })
@@ -157,13 +160,17 @@ class ViewGame extends Component {
        }
        else {
           // FIXME! - Add log entry here
-          // FIXME! - Add alert here before jumping
-          // FIXME! - Update points system here
+          Alert.success('CHALLENGE REJECTED', {
+          position: 'top-right',
+          onClose: function () { 
+            console.log('onClose Fired!');
+          } 
+          });
           console.log('Game (reject) Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
           this.props.history.push("/get_mygames")
 
-          resolve()
+          //resolve()
         }
         });
     })
@@ -193,10 +200,15 @@ class ViewGame extends Component {
        else {
           // FIXME! - Add log entry here
           console.log('Game deleted!')
+         Alert.success('GAME DELETED', {
+          position: 'top-right',
+          onClose: function () { 
+            console.log('onClose Fired!');
+          } 
+          });
+
           localStorage.removeItem(LOCAL_GAME_KEY);
           this.props.history.push("/get_mygames")
-
-          resolve()
         }
         });
     })
@@ -228,12 +240,15 @@ class ViewGame extends Component {
        }
        else {
           // FIXME! - Add log entry here
-          // FIXME! - Add alert here before jumping
+          Alert.success('CHALLENGE REMOVED', {
+          position: 'top-right',
+          onClose: function () { 
+            console.log('onClose Fired!');
+          } 
+          });
           console.log('Game (remove) Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
-          this.props.history.push("/get_mygames")
-          
-          resolve()
+          this.props.history.push("/dashboard")
         }
         });
     })
@@ -293,6 +308,12 @@ handleSubmit(e)
         else
         {
           console.log('API: upload game promise success!')
+          Alert.success('CHALLENGE SUBMITTED', {
+          position: 'top-right',
+          onClose: function () { 
+            console.log('onClose Fired!');
+          } 
+          });
           // success
           _this.setState({
             c_image: this.state.data_uri,

@@ -137,6 +137,13 @@ class ImageUpload extends Component {
         else
         {
           console.log('API: upload game promise success!')
+          Alert.success('GAME CREATED', {
+          position: 'top-right',
+          onClose: function () {
+            console.log('onClose Fired!');
+          }
+          });
+
           // success
           _this.setState({
             processing: false,

@@ -419,8 +419,8 @@ handleSubmit(e)
        if (this.state.c_image != null){
          master = (
            <div>
-             <button id="Accept" value="Accept" onClick={this.onAccept}>Accept</button>
-             <button id="Reject" value="Reject" onClick={this.onReject}>Reject</button>
+             <Button id="Accept" value="Accept" onClick={this.onAccept}>Accept</Button>
+             <Button id="Reject" value="Reject" onClick={this.onReject}>Reject</Button>
            </div>
          );
        }
@@ -428,7 +428,7 @@ handleSubmit(e)
        else{
          master = (
            <div>
-             <button id="Delete" value="Delete" onClick={this.onDelete}>Delete</button>
+             <Button id="Delete" value="Delete" onClick={this.onDelete}>Delete</Button>
            </div>
          );
 
@@ -464,7 +464,7 @@ handleSubmit(e)
        else{
          challenge = (
            <div>
-             <button id="Remove" value="Remove" onClick={this.onRemove}>Remove</button>
+             <Button id="Remove" value="Remove" onClick={this.onRemove}>Remove</Button>
            </div>
          );
       }

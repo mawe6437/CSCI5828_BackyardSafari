@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {bindAll} from 'lodash';
 
 // semantic-ui
-import { Container, Grid, Button, Form, Input } from 'semantic-ui-react'
+import { Container, Grid, Button, Form, Input, Label } from 'semantic-ui-react'
 
 // alert
 import Alert from 'react-s-alert';
@@ -173,9 +173,6 @@ class ImageUpload extends Component {
       <div>
         <h1>Backyard Safari</h1>
         <h2>New Game Creation</h2>
-        <h4>Step 1: Write Description</h4>
-        <h4>Step 2: Upload image</h4>
-        <h4>Step 3: Hit Create Button</h4>
       </div>
     );
 
@@ -191,8 +188,8 @@ class ImageUpload extends Component {
           <h4>GameID: {this.state.gameId}</h4>
           <h4>UserID: {this.state.userId}</h4>
           <h4>Description: {this.state.description}</h4>
-          <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
           <h4>Game Status: {this.state.gameStatus}</h4>
+          <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
         </div>
       );
     }
@@ -203,13 +200,21 @@ class ImageUpload extends Component {
 
     return(
      <Container text className='image_upload_form'>
-        <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+        <Form onSubmit={this.handleSubmit} encType="multipart/form-data">
           <Grid>
             <Grid.Column textAlign='center' width={16}>
               {title}
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <label>Description</label>
+              <Label pointing='below'>Select An Image</Label>
+              <div className='row'>
+              <div className='col-sm-12'>
+              <Input type="file" onChange={this.handleFile} />
+             </div>
+             </div>
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={16}>
+              <Label pointing='below'>Write A Description</Label>
               <Input
                 style={{width: '100%'}}
                 name='description'
@@ -217,23 +222,15 @@ class ImageUpload extends Component {
                 value={description}
                 placeholder='Add description here' />
             </Grid.Column>
-            <Grid.Column textAlign='left' width={16}>
-              <label>Upload an image</label>
-              <div className='row'>
-              <div className='col-sm-12'>
-              <input type="file" onChange={this.handleFile} />
-             </div>
-             </div>
-            </Grid.Column>
           </Grid>
           <Grid>
             <Grid.Column textAlign='left' width={16}>
-              <input disabled={this.state.processing} className='btn btn-primary' type="submit" value="Create" />
+              <Input size='large' disabled={this.state.processing} type="submit" value="Create Game" />
                {processing}
               {uploaded}
             </Grid.Column>
           </Grid>
-        </form>
+        </Form>
         <Form onSubmit={this.goHome} style={{marginTop:60}}>
         <Grid>
            <Grid.Column  textAlign='center' width={4}>

@@ -81,16 +81,20 @@ class MyGames extends Component {
         { 
         tempArray.push(
          <div>
+          <h4><hr></hr></h4>
           <h4>GameID: {id}</h4>
           <h4>Description: {desc}</h4>
           <img className='image-preview' src={img} alt="Uploaded Title" />
-          <button id={id} value={id} onClick={this.onClick}>View</button>
+          <h4><br></br></h4>
+          <Button id={id} value={id} onClick={this.onClick}>View</Button>
+          <h4><br></br></h4>
         </div>
         );
         }
       }
       tempArray.push(
        <div>
+        <h4><hr></hr></h4>
         <h2>Challenger Games List:</h2>
        </div>
       );
@@ -107,10 +111,13 @@ class MyGames extends Component {
         { 
         tempArray.push(
          <div>
+          <h4><hr></hr></h4>
           <h4>GameID: {id}</h4>
           <h4>Description: {desc}</h4>
           <img className='image-preview' src={img} alt="Uploaded Title" />
-          <button id={id} value={id} onClick={this.onClick}>View</button>
+          <h4><br></br></h4>
+          <Button id={id} value={id} onClick={this.onClick}>View</Button>
+          <h4><br></br></h4>
         </div>
         );
         }

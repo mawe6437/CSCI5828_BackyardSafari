@@ -91,27 +91,86 @@ class ViewGame extends Component {
   }
 
   goHome = (e) => {
-    //FIXME! - Clear Game local storage here
+    localStorage.removeItem(LOCAL_GAME_KEY);
     this.props.history.push("/dashboard")
   }
 
   // Master has accepted Challenger image
   onAccept = (e) => {
     console.log('Challenge image accepted!')
-    //FIXME! - Change game status in DB
-    //         Add log entry here
-    //         Update points system here
 
-    this.setState({gameStatus: 'finished'});
- }
+    e.preventDefault();
+    const update_params = {
+       game_id: this.state.gameId,
+       c_image: this.state.c_image,
+       c_userId: this.state.c_userId,
+       m_image: this.state.m_image,
+       m_userId: this.state.m_userId,
+       description: this.state.gameDescription,
+       g_status : 'finished'
+    }
+
+    MyAPI.update_game(update_params)
+    .then((data) => {
+      return new Promise((resolve, reject) => {
+       if (data.status !== 'success'){
+          reject('error')
+       }
+       else {
+          // FIXME! - Add log entry here
+          // FIXME! - Add alert here before jumping
+          // FIXME! - Update points system here
+          console.log('Game Updated!')
+          localStorage.removeItem(LOCAL_GAME_KEY);
+          this.props.history.push("/get_mygames")
+
+          resolve()
+        }
+        });
+    })
+    .catch((err) => {
+      console.log("err:", err)
+      localStorage.removeItem(LOCAL_GAME_KEY);
+    })
+
+  }
 
   // Master has rejected Challenger image
   onReject = (e) => {
     console.log('Challenge image rejected!')
-    //FIXME! - Remove challenger image/userId from DB
-    //         Add log entry here
+    e.preventDefault();
+    const update_params = {
+       game_id: this.state.gameId,
+       c_image: null,
+       c_userId: null,
+       m_image: this.state.m_image,
+       m_userId: this.state.m_userId,
+       description: this.state.gameDescription,
+       g_status : this.state.gameStatus
+    }
 
-    this.setState({c_image: null, c_userId: null});
+    MyAPI.update_game(update_params)
+    .then((data) => {
+      return new Promise((resolve, reject) => {
+       if (data.status !== 'success'){
+          reject('error')
+       }
+       else {
+          // FIXME! - Add log entry here
+          // FIXME! - Add alert here before jumping
+          // FIXME! - Update points system here
+          console.log('Game (reject) Updated!')
+          localStorage.removeItem(LOCAL_GAME_KEY);
+          this.props.history.push("/get_mygames")
+
+          resolve()
+        }
+        });
+    })
+    .catch((err) => {
+      console.log("err:", err)
+      localStorage.removeItem(LOCAL_GAME_KEY);
+    })
  }
 
   // Master has deleted this game
@@ -150,9 +209,38 @@ class ViewGame extends Component {
   // Challenger has removed his image
   onRemove = (e) => {
     console.log('Challenger Removed!')
-    //FIXME! - Remove c_image/c_userId from DB
-    //         Add log entry here
-    this.props.history.push("/get_mygames")
+    e.preventDefault();
+    const update_params = {
+       game_id: this.state.gameId,
+       c_image: null,
+       c_userId: null,
+       m_image: this.state.m_image,
+       m_userId: this.state.m_userId,
+       description: this.state.gameDescription,
+       g_status : this.state.gameStatus
+    }
+
+    MyAPI.update_game(update_params)
+    .then((data) => {
+      return new Promise((resolve, reject) => {
+       if (data.status !== 'success'){
+          reject('error')
+       }
+       else {
+          // FIXME! - Add log entry here
+          // FIXME! - Add alert here before jumping
+          console.log('Game (remove) Updated!')
+          localStorage.removeItem(LOCAL_GAME_KEY);
+          this.props.history.push("/get_mygames")
+          
+          resolve()
+        }
+        });
+    })
+    .catch((err) => {
+      console.log("err:", err)
+      localStorage.removeItem(LOCAL_GAME_KEY);
+    })
  }
 
 handleDeadSubmit(e)
@@ -174,7 +262,11 @@ handleSubmit(e)
     const update_params = {
        game_id: this.state.gameId,
        c_image: this.state.data_uri,
-       c_userId: this.state.cur_user
+       c_userId: this.state.cur_user,
+       m_image: this.state.m_image,
+       m_userId: this.state.m_userId,
+       description: this.state.gameDescription,
+       g_status : this.state.gameStatus
     }
 
     console.log('Passing game_params to API:')

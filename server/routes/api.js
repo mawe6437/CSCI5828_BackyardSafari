@@ -422,8 +422,6 @@ exports.update_game = (req, res) => {
   console.log("Server: Calling update_game!")
   console.log("req"); //form fields
   console.log(req.body.game_id);
-  console.log(req.body.c_image);
-  console.log(req.body.c_userId);
 
    let find_param = {
       _id: req.body.game_id
@@ -431,8 +429,12 @@ exports.update_game = (req, res) => {
 
     let upd_param = {
       $set: {
+      m_image: req.body.m_image,
+      m_userId: req.body.m_userId,
       c_image: req.body.c_image,
-      c_userId: req.body.c_userId
+      c_userId: req.body.c_userId,
+      description: req.body.description,
+      g_status : req.body.g_status
       }
     }
 

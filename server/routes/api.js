@@ -544,3 +544,52 @@ exports.delete_game = (req, res) => {
     console.log("err:", err)
   })
 }
+
+// Insert new user log event
+exports.upload_log = (req, res) => {
+  console.log("Server: Calling upload_log!")
+  console.log("req"); //form fields
+  console.log(req.body.m_userId);
+  console.log(req.body.log_entry);
+  // FIXME! - add timestamp here
+  let insert_params = {
+      userId: req.body.m_userId,
+      log_entry: req.body.log_entry
+  }
+
+  // insert
+  mongoDbHelper.collection("logTable").insert(insert_params)
+    .then((results) => {
+      console.log('Log added to DB!')
+      res.json({status: 'success', results });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}
+
+// get user log
+exports.get_mylog = (req, res) => {
+  console.log("Server: Calling get_mylog!")
+  console.log("req"); //form fields
+  console.log(req.body.user_id);
+
+  // Get both master and challenger games
+  let find_param = {
+    userId: req.body.user_id 
+  }
+
+  // find
+  mongoDbHelper.collection("logTable").find(find_param)
+    .then((results) => {
+      console.log('Logs retrieved from DB!')
+      res.json({status: 'success', results
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}
+

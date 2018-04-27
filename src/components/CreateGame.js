@@ -145,6 +145,15 @@ class ImageUpload extends Component {
           });
 
           // success
+
+          // FIXME! - Add gameId and timestamp
+          const log_param = {
+            m_userId: user,
+            log_entry: "Game Created!"
+          }
+
+          MyAPI.upload_log(log_param)
+
           _this.setState({
             processing: false,
             uploaded_uri: data.uri,

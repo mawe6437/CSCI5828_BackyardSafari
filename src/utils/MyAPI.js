@@ -154,3 +154,28 @@ export const logout = (params) =>
     },
     body: JSON.stringify( params )
   }).then(res => res.json())
+
+// retrieve user logs
+export const get_mylog = (params) =>
+  fetch(`${api}/get_mylog`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  }).then(res => res.json())
+
+// upload log
+export const upload_log = (params) =>
+  fetch(`${api}/upload_log`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  }).then(res => res.json())
+

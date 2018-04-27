@@ -73,8 +73,16 @@ class ViewGame extends Component {
             c_image: data.results.c_image,
             c_userId: data.results.c_userId,
             m_image: data.results.m_image,
-            m_userId: data.results.m_userId
+            m_userId: data.results.m_userId,
+            g_score: data.results.g_score,
+            g_end_time: data.results.g_end_time,
+            g_start_time: data.results.g_start_time,
+            g_time_start_display: data.results.g_time_start_display,
+            g_end_time_display: data.results.g_end_time_display
           });
+          console.log("now start time:", this.state.g_start_time);
+          console.log("now end time:", this.state.g_end_time);
+          console.log("now score:", this.state.g_score);
 
           resolve()
         }
@@ -99,6 +107,37 @@ class ViewGame extends Component {
   onAccept = (e) => {
     console.log('Challenge image accepted!')
 
+    let time = new Date();
+
+    let g_end_time_display = "";
+    let hours = time.getHours()
+    let minutes = time.getMinutes()
+    let seconds = time.getSeconds()
+
+    if (minutes < 10) {
+      minutes = "0" + minutes
+        }
+
+        if (seconds < 10) {
+          seconds = "0" + seconds
+        }
+
+        g_end_time_display += hours + ":" + minutes + ":" + seconds + " ";
+
+        if(hours > 11){
+          g_end_time_display += "PM"
+        } else {
+          g_end_time_display += "AM"
+        }
+        console.log("time after", g_end_time_display);
+
+
+    let g_end_time = new Date().getTime();
+    let score =  (1000 / ((g_end_time - this.state.g_start_time) / 3600)).toFixed(3);
+    console.log("score:", score);
+    console.log("end time:", this.state.g_start_time);
+    console.log("end time:", g_end_time);
+
     e.preventDefault();
     const update_params = {
        game_id: this.state.gameId,
@@ -107,7 +146,10 @@ class ViewGame extends Component {
        m_image: this.state.m_image,
        m_userId: this.state.m_userId,
        description: this.state.gameDescription,
-       g_status : 'finished'
+       g_status : 'finished',
+       g_end_time : g_end_time,
+       g_end_time_display : g_end_time_display,
+       g_score : score
     }
 
     MyAPI.update_game(update_params)
@@ -121,9 +163,9 @@ class ViewGame extends Component {
           // FIXME! - Update points system here
           Alert.success('CHALLENGE ACCEPTED', {
           position: 'top-right',
-          onClose: function () { 
+          onClose: function () {
             console.log('onClose Fired!');
-          } 
+          }
           });
           console.log('Game Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
@@ -162,9 +204,9 @@ class ViewGame extends Component {
           // FIXME! - Add log entry here
           Alert.success('CHALLENGE REJECTED', {
           position: 'top-right',
-          onClose: function () { 
+          onClose: function () {
             console.log('onClose Fired!');
-          } 
+          }
           });
           console.log('Game (reject) Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
@@ -202,9 +244,9 @@ class ViewGame extends Component {
           console.log('Game deleted!')
          Alert.success('GAME DELETED', {
           position: 'top-right',
-          onClose: function () { 
+          onClose: function () {
             console.log('onClose Fired!');
-          } 
+          }
           });
 
           localStorage.removeItem(LOCAL_GAME_KEY);
@@ -242,9 +284,9 @@ class ViewGame extends Component {
           // FIXME! - Add log entry here
           Alert.success('CHALLENGE REMOVED', {
           position: 'top-right',
-          onClose: function () { 
+          onClose: function () {
             console.log('onClose Fired!');
-          } 
+          }
           });
           console.log('Game (remove) Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
@@ -310,9 +352,9 @@ handleSubmit(e)
           console.log('API: upload game promise success!')
           Alert.success('CHALLENGE SUBMITTED', {
           position: 'top-right',
-          onClose: function () { 
+          onClose: function () {
             console.log('onClose Fired!');
-          } 
+          }
           });
           // success
           _this.setState({
@@ -390,6 +432,7 @@ handleSubmit(e)
     let loaded;
     let master;
     let challenge;
+    let complete;
 
     if (this.state.gameId){
          loaded = (
@@ -472,6 +515,14 @@ handleSubmit(e)
    }
    else{
    // Game is not open; either deleted or finished
+  complete = (
+    <div>
+    <h4>Start Time:{this.state.g_time_start_display}</h4>
+    <h4>End Time:{this.state.g_end_time_display}</h4>
+    <h4>Score:{this.state.g_score}</h4>
+    </div>
+
+  )
    }
 
     return(
@@ -485,6 +536,7 @@ handleSubmit(e)
               {loaded}
               {master}
               {challenge}
+              {complete}
             </Grid.Column>
           </Grid>
         </form>

@@ -392,13 +392,44 @@ exports.upload_game = (req, res) => {
   console.log(req.body.description);
   console.log(req.body.status);
 
+  let time = new Date();
+  let start_time = time.getTime();
+
+  //console.log("time before", displayTime);
+  let display_time = "";
+  let hours = time.getHours()
+  let minutes = time.getMinutes()
+  let seconds = time.getSeconds()
+
+  if (minutes < 10) {
+    minutes = "0" + minutes
+      }
+
+      if (seconds < 10) {
+        seconds = "0" + seconds
+      }
+
+      display_time += hours + ":" + minutes + ":" + seconds + " ";
+
+      if(hours > 11){
+        display_time += "PM"
+      } else {
+        display_time += "AM"
+      }
+      console.log("time after", display_time);
+
   let insert_params = {
       m_image: req.body.m_image,
       m_userId: req.body.m_userId,
       c_image: req.body.c_image,
       c_userId: req.body.c_userId,
       description: req.body.description,
-      g_status : req.body.g_status
+      g_status : req.body.g_status,
+      g_start_time : start_time,
+      g_time_start_display : display_time,
+      g_end_time : null,
+      g_end_start_display : null,
+      g_score : null
   }
 
   // insert
@@ -408,7 +439,9 @@ exports.upload_game = (req, res) => {
       res.json({status: 'success',
                 gameId:results._id,
                 g_status:insert_params.g_status,
-                uri:insert_params.m_image
+                uri:insert_params.m_image,
+                g_time_start:insert_params.g_start_time,
+                g_time_start_display:insert_params.g_time_start_display
       });
   })
   .catch((err) => {
@@ -434,7 +467,10 @@ exports.update_game = (req, res) => {
       c_image: req.body.c_image,
       c_userId: req.body.c_userId,
       description: req.body.description,
-      g_status : req.body.g_status
+      g_status : req.body.g_status,
+      g_end_time : req.body.g_end_time,
+      g_end_time_display : req.body.g_end_time_display,
+      g_score : req.body.g_score
       }
     }
 
@@ -460,9 +496,9 @@ exports.get_mygames = (req, res) => {
   // Get both master and challenger games
   let find_param = {
     $or: [
-      { m_userId: req.body.user_id}, 
+      { m_userId: req.body.user_id},
       { c_userId: req.body.user_id}
-    ] 
+    ]
   }
 
   // find
@@ -544,3 +580,58 @@ exports.delete_game = (req, res) => {
     console.log("err:", err)
   })
 }
+
+
+
+
+
+
+// login with email and password
+// exports.update_user_score = (req, res) => {
+//
+//   let g_score =  req.body.g_score;
+//   let _id =  req.body._id;
+//
+//   let find_param = {
+//     '_id':_id
+//   }
+//
+//   let user_info = {};
+//
+//   // insert
+//   mongoDbHelper.collection("users").findOne(find_param)
+//   .then((results) => {
+//     // check password
+//
+//     return new Promise( (resolve, reject) => {
+//
+//       if (!results){
+//         reject("no such user")
+//       }
+//       if (!results.services || !results.services.password || !results.services.password.bcrypt){
+//         reject("something must be wrong")
+//       }
+//
+//       // set user info
+//       user_info.score = results.score + user_info.score;
+//
+//         if (res === true){
+//           resolve()
+//         } else {
+//           reject("score is not valid")
+//         }
+//       });
+//     } )
+//   })
+//   .then(() => {
+//     res.json({
+//       status: 'success',
+//       u_score:
+//     })
+//
+//   })
+//   .catch((err) => {
+//     res.json({status: 'error', detail: err})
+//   })
+// }
+//

@@ -79,9 +79,9 @@ class ImageUpload extends Component {
     this.props.history.push("/dashboard")
   }
 
-
   handleSubmit(e)
   {
+
     console.log('in handleSubmit')
 
     e.preventDefault();
@@ -104,13 +104,16 @@ class ImageUpload extends Component {
     // 5. Description
     // 6. Status - Open, Pending, Closed
 
+
+
     const game_params = {
        m_image: this.state.data_uri,
        m_userId: user,
        c_image: null,
        c_userId: null,
        description: this.state.description,
-       g_status: "open"
+       g_status: "open",
+       g_time: null
     }
 
     console.log('Passing game_params to API:')
@@ -144,12 +147,17 @@ class ImageUpload extends Component {
           }
           });
 
+            //let displayTime = data.g_time.getTime();
+
+
           // success
           _this.setState({
             processing: false,
             uploaded_uri: data.uri,
             gameId: data.gameId,
             gameStatus: data.g_status,
+            displayTime: data.g_time_start_display,
+            gameStart : data.g_time_start,
             userId: user
           });
         }
@@ -180,6 +188,8 @@ class ImageUpload extends Component {
     let uploaded;
 
     console.log('Image Upload Rendering!');
+    console.log("time:", this.state.displayTime);
+    console.log("time:", this.state.gameStart);
 
     if (this.state.uploaded_uri) {
       uploaded = (
@@ -189,6 +199,7 @@ class ImageUpload extends Component {
           <h4>UserID: {this.state.userId}</h4>
           <h4>Description: {this.state.description}</h4>
           <h4>Game Status: {this.state.gameStatus}</h4>
+          <h4>Game Start Time: {this.state.displayTime}</h4>
           <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
         </div>
       );

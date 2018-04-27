@@ -581,57 +581,50 @@ exports.delete_game = (req, res) => {
   })
 }
 
+// Insert new user log event
+exports.upload_log = (req, res) => {
+  console.log("Server: Calling upload_log!")
+  console.log("req"); //form fields
+  console.log(req.body.m_userId);
+  console.log(req.body.log_entry);
+  // FIXME! - add timestamp here
+  let insert_params = {
+      userId: req.body.m_userId,
+      log_entry: req.body.log_entry
+  }
 
+  // insert
+  mongoDbHelper.collection("logTable").insert(insert_params)
+    .then((results) => {
+      console.log('Log added to DB!')
+      res.json({status: 'success', results });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}
 
+// get user log
+exports.get_mylog = (req, res) => {
+  console.log("Server: Calling get_mylog!")
+  console.log("req"); //form fields
+  console.log(req.body.user_id);
 
+  // Get both master and challenger games
+  let find_param = {
+    userId: req.body.user_id
+  }
 
-
-// login with email and password
-// exports.update_user_score = (req, res) => {
-//
-//   let g_score =  req.body.g_score;
-//   let _id =  req.body._id;
-//
-//   let find_param = {
-//     '_id':_id
-//   }
-//
-//   let user_info = {};
-//
-//   // insert
-//   mongoDbHelper.collection("users").findOne(find_param)
-//   .then((results) => {
-//     // check password
-//
-//     return new Promise( (resolve, reject) => {
-//
-//       if (!results){
-//         reject("no such user")
-//       }
-//       if (!results.services || !results.services.password || !results.services.password.bcrypt){
-//         reject("something must be wrong")
-//       }
-//
-//       // set user info
-//       user_info.score = results.score + user_info.score;
-//
-//         if (res === true){
-//           resolve()
-//         } else {
-//           reject("score is not valid")
-//         }
-//       });
-//     } )
-//   })
-//   .then(() => {
-//     res.json({
-//       status: 'success',
-//       u_score:
-//     })
-//
-//   })
-//   .catch((err) => {
-//     res.json({status: 'error', detail: err})
-//   })
-// }
-//
+  // find
+  mongoDbHelper.collection("logTable").find(find_param)
+    .then((results) => {
+      console.log('Logs retrieved from DB!')
+      res.json({status: 'success', results
+      });
+  })
+  .catch((err) => {
+    res.json({status: 'error', detail: err})
+    console.log("err:", err)
+  })
+}

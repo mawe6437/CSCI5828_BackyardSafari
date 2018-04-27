@@ -151,6 +151,16 @@ class ImageUpload extends Component {
 
 
           // success
+
+          let entry = "Game " + data.gameId + " Created!"
+          // FIXME! - Add timestamp
+          const log_param = {
+            m_userId: user,
+            log_entry: entry
+          }
+
+          MyAPI.upload_log(log_param)
+
           _this.setState({
             processing: false,
             uploaded_uri: data.uri,

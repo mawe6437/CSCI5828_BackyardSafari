@@ -146,10 +146,11 @@ class ImageUpload extends Component {
 
           // success
 
-          // FIXME! - Add gameId and timestamp
+          let entry = "Game " + data.gameId + " Created!"
+          // FIXME! - Add timestamp
           const log_param = {
             m_userId: user,
-            log_entry: "Game Created!"
+            log_entry: entry
           }
 
           MyAPI.upload_log(log_param)

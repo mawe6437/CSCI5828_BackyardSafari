@@ -11,6 +11,7 @@ import CreateGame from './CreateGame'
 import MyGames from './MyGames'
 import SearchGames from './SearchGames'
 import ViewGame from './ViewGame'
+import ViewLog from './ViewLog'
 
 // alert
 import Alert from 'react-s-alert';
@@ -116,6 +117,10 @@ class App extends Component {
 
           <Route exact path='/search_games' render={() => (
             <SearchGames />
+          )} />
+
+          <Route exact path='/viewlog' render={() => (
+            <ViewLog />
           )} />
 
           <Route component={NoMatch} />

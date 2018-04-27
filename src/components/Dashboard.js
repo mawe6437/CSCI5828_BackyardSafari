@@ -47,6 +47,11 @@ class Dashboard extends Component {
   goSearchGame = (e) => {
     this.props.history.push("/search_games")
   }
+
+  goViewLog = (e) => {
+    this.props.history.push("/viewlog")
+  }
+
   render() {
     let title = (
       <div>
@@ -83,6 +88,13 @@ class Dashboard extends Component {
                 <Button
                   style={{width: '100%'}}
                   type='submit'>Search Games</Button>
+              </Form>
+            </Grid.Column>
+            <Grid.Column textAlign='left' width={16}>
+              <Form onSubmit={this.goViewLog} style={{marginTop:60}}>
+                <Button
+                  style={{width: '100%'}}
+                  type='submit'>View Log</Button>
               </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>

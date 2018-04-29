@@ -69,7 +69,7 @@ class ViewLog extends Component {
            tempArray.push(
             <div>
              <h4><hr></hr></h4>
-             <h4>{log_time}: {log_entry}</h4>
+             <h4><font color="white">{log_time}: {log_entry}</font></h4>
            </div>
            )
           }

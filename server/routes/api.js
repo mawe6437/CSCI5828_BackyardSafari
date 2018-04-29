@@ -394,7 +394,6 @@ exports.upload_game = (req, res) => {
 
   let time = new Date();
   let start_time = time.getTime();
-
   //console.log("time before", displayTime);
   let display_time = "";
   let hours = time.getHours()
@@ -588,35 +587,12 @@ exports.upload_log = (req, res) => {
   console.log(req.body.m_userId);
   console.log(req.body.log_entry);
   let time = new Date();
-  let start_time = time.getTime();
 
-  //console.log("time before", displayTime);
-  let display_time = "";
-  let hours = time.getHours()
-  let minutes = time.getMinutes()
-  let seconds = time.getSeconds()
+  console.log("time", time);
 
-  if (minutes < 10) {
-    minutes = "0" + minutes
-  }
-
-  if (seconds < 10) {
-    seconds = "0" + seconds
-  }
-
-  display_time += hours + ":" + minutes + ":" + seconds + " ";
-
-  if(hours > 11){
-    display_time += "PM"
-  } else {
-    display_time += "AM"
-  }
-  console.log("time after", display_time);
-
-  // FIXME! - add timestamp here
   let insert_params = {
       userId: req.body.m_userId,
-      log_time: display_time,
+      log_time: time,
       log_entry: req.body.log_entry
   }
 

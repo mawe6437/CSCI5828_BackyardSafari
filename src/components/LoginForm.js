@@ -86,7 +86,7 @@ class LoginForm extends Component {
           <Grid>
 
             <Grid.Column textAlign='left' width={16}>
-              <label>Email</label>
+              <b><label>Email</label></b>
               <Input
                 style={{width: '100%'}}
                 icon='mail outline'
@@ -98,7 +98,7 @@ class LoginForm extends Component {
             </Grid.Column>
 
             <Grid.Column textAlign='left' width={16}>
-              <label>Password</label>
+              <b><label>Password</label></b>
               <Input
                 style={{width: '100%'}}
                 icon='key'

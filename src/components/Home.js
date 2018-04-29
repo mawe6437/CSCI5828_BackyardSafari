@@ -7,13 +7,15 @@ import { Link } from 'react-router-dom'
 import { Container, Grid } from 'semantic-ui-react'
 
 import LoginForm from './LoginForm'
+import title_img from './pics/title.png'
+
 
 class Home extends Component {
 
   render() {
     let title = (
       <div>
-        <h1>Backyard Safari</h1>
+        <img className='title_image' src={title_img}/>
       </div>
     );
     return(
@@ -21,7 +23,7 @@ class Home extends Component {
 
         <Grid style={{marginTop:60}}>
           <Grid.Column textAlign='right' width={16}>
-            <Link to="/create_acount">Create an account</Link>
+            <Link to="/create_acount"><b><font color="white">Create an account</font></b></Link>
           </Grid.Column>
           <Grid.Column textAlign='center' width={16}>
             {title}

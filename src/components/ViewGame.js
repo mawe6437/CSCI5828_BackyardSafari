@@ -13,6 +13,7 @@ import Alert from 'react-s-alert';
 import * as MyAPI from '../utils/MyAPI'
 import { LOCAL_STRAGE_KEY } from '../utils/Settings'
 import { LOCAL_GAME_KEY } from '../utils/Settings'
+import title_img from './pics/title.png'
 
 class ViewGame extends Component {
 

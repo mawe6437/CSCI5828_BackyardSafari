@@ -17,6 +17,8 @@ import { Container, Grid, Button, Form, Input } from 'semantic-ui-react'
 // API
 import * as MyAPI from '../utils/MyAPI'
 import { LOCAL_STRAGE_KEY, LOCAL_GAME_KEY } from '../utils/Settings'
+import title_img from './pics/title.png'
+import findgame from './pics/findgame.png'
 
 class ImageUpload extends Component {
 
@@ -61,8 +63,8 @@ class ImageUpload extends Component {
      const { description } = this.state
     let title = (
       <div>
-        <h1>Backyard Safari</h1>
-        <h2>Find a Game</h2>
+        <p><img className='title_image' src={title_img}/></p>
+        <img className='img_title' src={findgame} width='200' height='30'/>
       </div>
     );
 

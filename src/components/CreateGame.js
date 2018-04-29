@@ -12,6 +12,8 @@ import Alert from 'react-s-alert';
 // API
 import * as MyAPI from '../utils/MyAPI'
 import { LOCAL_STRAGE_KEY } from '../utils/Settings'
+import title_img from './pics/title.png'
+import newgame from './pics/newgame.png'
 
 class ImageUpload extends Component {
 
@@ -189,8 +191,8 @@ class ImageUpload extends Component {
     const { description } = this.state
     let title = (
       <div>
-        <h1>Backyard Safari</h1>
-        <h2>New Game Creation</h2>
+        <p><img className='title_image' src={title_img}/></p>
+        <img className='img_title' src={newgame} width='350' height='30'/>
       </div>
     );
 

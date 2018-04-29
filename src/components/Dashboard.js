@@ -9,6 +9,9 @@ import {bindAll} from 'lodash';
 // API
 import * as MyAPI from '../utils/MyAPI'
 
+import title_img from './pics/title.png'
+import welcome from './pics/welcome.png'
+
 class Dashboard extends Component {
   constructor() {
    super();
@@ -55,8 +58,8 @@ class Dashboard extends Component {
   render() {
     let title = (
       <div>
-        <h1>Backyard Safari</h1>
-        <h2>Welcome to Backyard Safari!</h2>
+        <p><img className='title_image' src={title_img}/></p>
+        <img className='img_title' src={welcome} width='450' height='40'/>
       </div>
     );
 
@@ -70,35 +73,35 @@ class Dashboard extends Component {
               {title}
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Form onSubmit={this.goNewGame} style={{marginTop:60}}>
+              <Form onSubmit={this.goNewGame} style={{marginTop:20}}>
                 <Button
                   style={{width: '100%'}}
                   type='submit'>New Game</Button>
               </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Form onSubmit={this.goMyGame} style={{marginTop:60}}>
+              <Form onSubmit={this.goMyGame} style={{marginTop:50}}>
                 <Button
                   style={{width: '100%'}}
                   type='submit'>My Games</Button>
               </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Form onSubmit={this.goSearchGame} style={{marginTop:60}}>
+              <Form onSubmit={this.goSearchGame} style={{marginTop:50}}>
                 <Button
                   style={{width: '100%'}}
                   type='submit'>Search Games</Button>
               </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Form onSubmit={this.goViewLog} style={{marginTop:60}}>
+              <Form onSubmit={this.goViewLog} style={{marginTop:50}}>
                 <Button
                   style={{width: '100%'}}
                   type='submit'>View Log</Button>
               </Form>
             </Grid.Column>
             <Grid.Column textAlign='left' width={16}>
-              <Form onSubmit={this.logoutRequest} style={{marginTop:60}}>
+              <Form onSubmit={this.logoutRequest} style={{marginTop:50}}>
                 <Button
                   style={{width: '100%'}}
                   type='submit'>Logout</Button>

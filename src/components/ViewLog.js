@@ -13,6 +13,8 @@ import Alert from 'react-s-alert';
 import * as MyAPI from '../utils/MyAPI'
 import { LOCAL_STRAGE_KEY } from '../utils/Settings'
 import { LOCAL_GAME_KEY } from '../utils/Settings'
+import title_img from './pics/title.png'
+import viewlog from './pics/viewlog.png'
 
 class ViewLog extends Component {
 
@@ -104,8 +106,8 @@ handleDeadSubmit(e)
 
     let title = (
       <div>
-        <h1>Backyard Safari</h1>
-        <h2>View Log</h2>
+        <p><img className='title_image' src={title_img}/></p>
+        <img className='img_title' src={viewlog} width='170' height='30'/>
       </div>
     );
 

@@ -1,6 +1,10 @@
 .App {
   text-align: center;
-  background: linear-gradient(0deg, #1af03d, #3acc74);
+  background-image:url("../src/components/pics/jungle.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
 }
 
 .App-logo {

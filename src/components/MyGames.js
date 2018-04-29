@@ -8,6 +8,8 @@ import { LOCAL_STRAGE_KEY, LOCAL_GAME_KEY } from '../utils/Settings'
 import {bindAll} from 'lodash';
 // API
 import * as MyAPI from '../utils/MyAPI'
+import title_img from './pics/title.png'
+import mygame from './pics/mygame.png'
 
 class MyGames extends Component {
 
@@ -133,8 +135,8 @@ class MyGames extends Component {
 
     let title = (
       <div>
-        <h1>Backyard Safari</h1>
-        <h2>My Games</h2>
+        <p><img className='title_image' src={title_img}/></p>
+        <img className='img_title' src={mygame} width='170' height='30'/>
       </div>
     );
 

@@ -63,12 +63,13 @@ class ViewLog extends Component {
           for (i = 0; i < results.length; i++) {
             let id = results[i]._id;
             let log_entry = results[i].log_entry;
+            let log_time = results[i].log_time;
             console.log(log_entry);
 
            tempArray.push(
             <div>
              <h4><hr></hr></h4>
-             <h4>Entry: {log_entry}</h4>
+             <h4>{log_time}: {log_entry}</h4>
            </div>
            )
           }

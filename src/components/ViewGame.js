@@ -168,6 +168,16 @@ class ViewGame extends Component {
             console.log('onClose Fired!');
           }
           });
+
+          let entry = "Game " + this.state.gameId + " Finished!"
+          // FIXME! - Add timestamp
+          const log_param = {
+            m_userId: this.state.m_userId,
+            log_entry: entry
+          }
+
+          MyAPI.upload_log(log_param)
+
           console.log('Game Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
           this.props.history.push("/get_mygames")
@@ -209,6 +219,16 @@ class ViewGame extends Component {
             console.log('onClose Fired!');
           }
           });
+
+          let entry = "Game " + this.state.gameId + " Challenge Rejected!"
+          // FIXME! - Add timestamp
+          const log_param = {
+            m_userId: this.state.m_userId,
+            log_entry: entry
+          }
+
+          MyAPI.upload_log(log_param)
+
           console.log('Game (reject) Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
           this.props.history.push("/get_mygames")
@@ -250,6 +270,15 @@ class ViewGame extends Component {
           }
           });
 
+          let entry = "Game " + this.state.gameId + " Deleted!"
+          // FIXME! - Add timestamp
+          const log_param = {
+            m_userId: this.state.m_userId,
+            log_entry: entry
+          }
+
+          MyAPI.upload_log(log_param)
+
           localStorage.removeItem(LOCAL_GAME_KEY);
           this.props.history.push("/get_mygames")
         }
@@ -289,6 +318,15 @@ class ViewGame extends Component {
             console.log('onClose Fired!');
           }
           });
+          let entry = "Game " + this.state.gameId + " Challenge Removed!"
+          // FIXME! - Add timestamp
+          const log_param = {
+            m_userId: this.state.c_userId,
+            log_entry: entry
+          }
+
+          MyAPI.upload_log(log_param)
+
           console.log('Game (remove) Updated!')
           localStorage.removeItem(LOCAL_GAME_KEY);
           this.props.history.push("/dashboard")
@@ -357,6 +395,15 @@ handleSubmit(e)
             console.log('onClose Fired!');
           }
           });
+          let entry = "Game " + this.state.gameId + " Challenge Submitted!"
+          // FIXME! - Add timestamp
+          const log_param = {
+            m_userId: this.state.cur_user,
+            log_entry: entry
+          }
+
+          MyAPI.upload_log(log_param)
+
           // success
           _this.setState({
             c_image: this.state.data_uri,

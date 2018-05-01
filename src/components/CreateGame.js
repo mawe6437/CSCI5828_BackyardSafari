@@ -207,12 +207,32 @@ class ImageUpload extends Component {
       uploaded = (
         <div>
           <h4>Image uploaded!</h4>
-          <h4>GameID: {this.state.gameId}</h4>
-          <h4>UserID: {this.state.userId}</h4>
-          <h4>Description: {this.state.description}</h4>
-          <h4>Game Status: {this.state.gameStatus}</h4>
-          <h4>Game Start Time: {this.state.displayTime}</h4>
-          <img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" />
+          <table border="1">
+            <tr>
+              <td><h4>GameID</h4></td>
+              <td><h4>{this.state.gameId}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>UserID</h4></td>
+              <td><h4>{this.state.userId}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Description</h4></td>
+              <td><h4>{this.state.description}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Game Status</h4></td>
+              <td><h4>{this.state.gameStatus}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Game Start Time</h4></td>
+              <td><h4>{this.state.displayTime}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Image</h4></td>
+              <td><img className='image-preview' src={this.state.data_uri} alt="Uploaded Title" /></td>
+            </tr>            
+          </table>
         </div>
       );
     }

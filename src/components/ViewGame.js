@@ -486,15 +486,36 @@ handleSubmit(e)
          loaded = (
         <div>
           <h4>Game data loaded!</h4>
-          <h4>GameID: {this.state.gameId}</h4>
-          <h4>Description: {this.state.gameDescription}</h4>
-          <h4>Game Status: {this.state.gameStatus}</h4>
-          <h4>Master UserID: {this.state.m_userId}</h4>
-          <h4>Master Image:</h4>
-          <img className='image-preview' src={this.state.m_image} alt="No Image Found" />
-          <h4>Challenge UserID: {this.state.c_userId}</h4>
-          <h4>Challenge Image:</h4>
-          <img className='image-preview' src={this.state.c_image} alt="No Image Found" />
+          <table border="1">
+            <tr>
+              <td><h4>GameID</h4></td>
+              <td><h4>{this.state.gameId}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Description</h4></td>
+              <td><h4>{this.state.gameDescription}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Game Status</h4></td>
+              <td><h4>{this.state.gameStatus}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Master UserID</h4></td>
+              <td><h4>{this.state.m_userId}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Master Image</h4></td>
+              <td><img className='image-preview' src={this.state.m_image} alt="No Image Found" /></td>
+            </tr>
+            <tr>
+              <td><h4>Challenge UserID</h4></td>
+              <td><h4>{this.state.c_userId}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Challenge Image</h4></td>
+              <td><img className='image-preview' src={this.state.c_image} alt="No Image Found" /></td>
+            </tr>            
+          </table>
         </div>
       );
     }
@@ -565,9 +586,20 @@ handleSubmit(e)
    // Game is not open; either deleted or finished
   complete = (
     <div>
-    <h4>Start Time:{this.state.g_time_start_display}</h4>
-    <h4>End Time:{this.state.g_end_time_display}</h4>
-    <h4>Score:{this.state.g_score}</h4>
+    <table border="1">
+      <tr>
+        <td><h4>Start Time</h4></td>
+        <td><h4>{this.state.g_time_start_display}</h4></td>
+      </tr>    
+      <tr>
+        <td><h4>End Time</h4></td>
+        <td><h4>{this.state.g_end_time_display}</h4></td>
+      </tr>
+      <tr>
+        <td><h4>Score</h4></td>
+        <td><h4>{this.state.g_score}</h4></td>
+      </tr>
+    </table>
     </div>
 
   )

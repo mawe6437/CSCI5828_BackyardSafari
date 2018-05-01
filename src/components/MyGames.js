@@ -82,13 +82,26 @@ class MyGames extends Component {
         if(m_user === userid)
         { 
         tempArray.push(
-         <div>
+        <div>
           <h4><hr></hr></h4>
-          <h4>GameID: {id}</h4>
-          <h4>Description: {desc}</h4>
-          <img className='image-preview' src={img} alt="Uploaded Title" />
-          <h4><br></br></h4>
-          <Button id={id} value={id} onClick={this.onClick}>View</Button>
+          <table border="1">
+            <tr>
+              <td><h4>GameID</h4></td>
+              <td><h4>{id}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Description</h4></td>
+              <td><h4>{desc}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Image</h4></td>
+              <td><img className='image-preview' src={img} alt="Uploaded Title" /></td>
+            </tr>
+            <tr>
+              <td><h4>Details</h4></td>
+              <td><Button id={id} value={id} onClick={this.onClick}>View</Button></td>
+            </tr>
+          </table>
           <h4><br></br></h4>
         </div>
         );
@@ -114,11 +127,24 @@ class MyGames extends Component {
         tempArray.push(
          <div>
           <h4><hr></hr></h4>
-          <h4>GameID: {id}</h4>
-          <h4>Description: {desc}</h4>
-          <img className='image-preview' src={img} alt="Uploaded Title" />
-          <h4><br></br></h4>
-          <Button id={id} value={id} onClick={this.onClick}>View</Button>
+          <table border="1">
+            <tr>
+              <td><h4>GameID</h4></td>
+              <td><h4>{id}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Description</h4></td>
+              <td><h4>{desc}</h4></td>
+            </tr>
+            <tr>
+              <td><h4>Image</h4></td>
+              <td><img className='image-preview' src={img} alt="Uploaded Title" /></td>
+            </tr>
+            <tr>
+              <td><h4>Details</h4></td>
+              <td><Button id={id} value={id} onClick={this.onClick}>View</Button></td>
+            </tr>
+          </table>
           <h4><br></br></h4>
         </div>
         );

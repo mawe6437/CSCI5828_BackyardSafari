@@ -144,3 +144,18 @@ describe('Check ViewGame', function(){
   });
 });   
 
+
+// Test7: Check ViewLog.js
+describe('Check ViewLog', function(){
+  //since api.js doesn't define any error cases for this function, 
+  //only 'success' test is needed.
+  it('Should pass with any userID. \n\tIt does not matter whether that user has games or not.', function(){
+    const params = {
+          user_id: 'adddddddddddddddd'
+    }
+    MyAPI.get_mylog(params)
+    .then((data) => {
+      expect(data.status).to.equal('success');
+    });
+  });
+});   
